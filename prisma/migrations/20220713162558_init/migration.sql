@@ -24,6 +24,16 @@ CREATE TABLE "Note" (
     CONSTRAINT "Note_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE "FINANCIALDETAILS"(
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "balance" Int NOT NULL,
+    "income"  INT NOT NULL,
+    "savings" INT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Note_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
