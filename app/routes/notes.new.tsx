@@ -3,7 +3,7 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
-import { createNote } from "~/models/note.server";
+import { createNote, addFinancialDetails } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -12,6 +12,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const title = formData.get("title");
   const body = formData.get("body");
+
+  // Function to parse a value to an integer or return a default value
+  const parseInteger = (value: FormDataEntryValue | null): number => {
+    return value && typeof value === "string" ? parseInt(value, 10) : 0;
+  };
+
+  const balance = parseInteger(formData.get("balance"));
+  const income = parseInteger(formData.get("income"));
+  const savings = parseInteger(formData.get("savings"));
 
   if (typeof title !== "string" || title.length === 0) {
     return json(
@@ -28,6 +37,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const note = await createNote({ body, title, userId });
+  const financeDetails = await addFinancialDetails({balance, savings, income, userId})
 
   return redirect(`/notes/${note.id}`);
 };
@@ -92,6 +102,66 @@ export default function NewNotePage() {
         {actionData?.errors?.body ? (
           <div className="pt-1 text-red-700" id="body-error">
             {actionData.errors.body}
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Balance </span>
+          <input
+            ref={titleRef}
+            name="balance"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            aria-invalid={actionData?.errors?.title ? true : undefined}
+            aria-errormessage={
+              actionData?.errors?.title ? "title-error" : undefined
+            }
+          />
+        </label>
+        {actionData?.errors?.title ? (
+          <div className="pt-1 text-red-700" id="title-error">
+            {actionData.errors.title}
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Income: </span>
+          <input
+            ref={titleRef}
+            name="income"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            aria-invalid={actionData?.errors?.title ? true : undefined}
+            aria-errormessage={
+              actionData?.errors?.title ? "title-error" : undefined
+            }
+          />
+        </label>
+        {actionData?.errors?.title ? (
+          <div className="pt-1 text-red-700" id="title-error">
+            {actionData.errors.title}
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        <label className="flex w-full flex-col gap-1">
+          <span>Savings: </span>
+          <input
+            ref={titleRef}
+            name="savings"
+            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            aria-invalid={actionData?.errors?.title ? true : undefined}
+            aria-errormessage={
+              actionData?.errors?.title ? "title-error" : undefined
+            }
+          />
+        </label>
+        {actionData?.errors?.title ? (
+          <div className="pt-1 text-red-700" id="title-error">
+            {actionData.errors.title}
           </div>
         ) : null}
       </div>
