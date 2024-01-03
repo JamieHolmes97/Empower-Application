@@ -1,4 +1,4 @@
-import type { User, Note } from "@prisma/client";
+import type { User, Note, FinancialDetails} from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
@@ -41,6 +41,29 @@ export function createNote({
     },
   });
 }
+
+export function addFinancialDetails({
+  balance,
+  income,
+  savings,
+  userId,
+}: Pick<FinancialDetails, "balance" | "income" | "savings"> & {
+  userId: User["id"];
+}) {
+  return prisma.financialDetails.create({
+    data: {
+      balance,
+      income,
+      savings,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+}
+
 
 export function deleteNote({
   id,
