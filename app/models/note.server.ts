@@ -64,6 +64,12 @@ export function addFinancialDetails({
   });
 }
 
+export function getFinancialDetails({ userId }: { userId: User["id"] }) {
+  return prisma.financialDetails.findFirst({
+    where: { userId },
+  });
+}
+
 
 export function deleteNote({
   id,
