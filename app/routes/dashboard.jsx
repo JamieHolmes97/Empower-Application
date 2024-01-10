@@ -1,11 +1,8 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { getFinancialDetails } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
 
-import OutlinedCard from "../components/financialdetailscard";
+import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 
 export async function loader({ request }) {
@@ -15,7 +12,7 @@ export async function loader({ request }) {
   return financialDetails;
 }
 
-export default function Example({ financialDetails }) {
+export default function Example() {
   const data = useLoaderData();
   console.log({ data });
   return (
@@ -33,7 +30,7 @@ export default function Example({ financialDetails }) {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Your content */}
             <div>
-              <OutlinedCard financialData={data} />
+              <FinancialDetailsCard financialData={data} />
             </div>
             {/* Display financial details */}
             <div>
