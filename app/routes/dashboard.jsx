@@ -1,7 +1,10 @@
 import { getFinancialDetails } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
-
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 
@@ -11,6 +14,14 @@ export async function loader({ request }) {
   const financialDetails = await getFinancialDetails({ userId });
   return financialDetails;
 }
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 export default function Example() {
   const data = useLoaderData();
@@ -30,7 +41,16 @@ export default function Example() {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Your content */}
             <div>
-              <FinancialDetailsCard financialData={data} />
+              
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Item>
+                      <FinancialDetailsCard financialData={data} />
+                    </Item>
+                  </Grid>
+                </Grid>
+              </Box>
             </div>
             {/* Display financial details */}
             <div>
