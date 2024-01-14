@@ -32,7 +32,7 @@ describe("smoke tests", () => {
     cy.findByRole("link", { name: /log in/i });
   });
 
-  it("should allow you to make a note", () => {
+  it("should allow you to add financial data, check the db reads correclty, edit the data and check again", () => {
     const testNote = {
       title: faker.lorem.words(1),
       body: faker.lorem.sentences(1),
@@ -46,8 +46,8 @@ describe("smoke tests", () => {
     const numericValuesChange = {
       balance: 3000,
       income: 2000,
-      savings: 4500
-    }
+      savings: 4500,
+    };
 
     cy.login();
 
@@ -88,17 +88,17 @@ describe("smoke tests", () => {
 
     cy.visit("/updatefinancialdata");
 
-    cy.findByRole("textbox", { name: /balance/i }).clear().type(
-      String(numericValuesChange.balance),
-    );
+    cy.findByRole("textbox", { name: /balance/i })
+      .clear()
+      .type(String(numericValuesChange.balance));
 
-    cy.findByRole("textbox", { name: /income/i }).clear().type(
-      String(numericValuesChange.income),
-    );
+    cy.findByRole("textbox", { name: /income/i })
+      .clear()
+      .type(String(numericValuesChange.income));
 
-    cy.findByRole("textbox", { name: /savings/i }).clear().type(
-      String(numericValuesChange.savings),
-    );
+    cy.findByRole("textbox", { name: /savings/i })
+      .clear()
+      .type(String(numericValuesChange.savings));
 
     cy.findByRole("button", { name: /submit/i }).click();
 

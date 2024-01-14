@@ -25,12 +25,6 @@ export const loader: ActionFunction = async ({ request }) => {
   return financialDetails;
 };
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -63,6 +57,7 @@ export default function EditFinancialData() {
   }
 
   const data = useLoaderData<FinancialDetails>();
+  
   return (
       <div className="min-h-full bg-gray-100">
         <NavBar />
