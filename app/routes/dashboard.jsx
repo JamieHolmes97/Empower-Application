@@ -9,7 +9,7 @@ import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 
 export async function loader({ request }) {
-  console.log("Loader function is being executed"); // Add this line
+  console.log("Loader function is being executed");
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
   return financialDetails;
@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Example() {
+export default function Dashboard() {
   const data = useLoaderData();
   console.log({ data });
   return (
@@ -37,7 +37,6 @@ export default function Example() {
             </h1>
           </div>
         </header>
-        <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Your content */}
             <div>
@@ -45,9 +44,7 @@ export default function Example() {
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <Item>
                       <FinancialDetailsCard financialData={data} />
-                    </Item>
                   </Grid>
                 </Grid>
               </Box>
@@ -68,7 +65,6 @@ export default function Example() {
               )}
             </div>
           </div>
-        </main>
       </div>
     </>
   );
