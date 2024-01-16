@@ -17,6 +17,18 @@ describe("smoke tests", () => {
       password: faker.internet.password(),
     };
 
+    const numericValues = {
+      balance: 344,
+      income: 250,
+      savings: 1200,
+    };
+
+    const numericValuesChange = {
+      balance: 3000,
+      income: 2000,
+      savings: 4500,
+    };
+
     cy.then(() => ({ email: loginForm.email })).as("user");
 
     cy.visitAndCheck("/");
@@ -26,40 +38,6 @@ describe("smoke tests", () => {
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
     cy.findByLabelText(/password/i).type(loginForm.password);
     cy.findByRole("button", { name: /create account/i }).click();
-
-    cy.findByRole("link", { name: /notes/i }).click();
-    cy.findByRole("button", { name: /logout/i }).click();
-    cy.findByRole("link", { name: /log in/i });
-  });
-
-  it("should allow you to add financial data, check the db reads correclty, edit the data and check again", () => {
-    const testNote = {
-      title: faker.lorem.words(1),
-      body: faker.lorem.sentences(1),
-    };
-    const numericValues = {
-      balance: 1000,
-      income: 5000,
-      savings: 2000,
-    };
-
-    const numericValuesChange = {
-      balance: 3000,
-      income: 2000,
-      savings: 4500,
-    };
-
-    cy.login();
-
-    cy.visitAndCheck("/");
-
-    cy.findByRole("link", { name: /notes/i }).click();
-    cy.findByText("No notes yet");
-
-    cy.findByRole("link", { name: /\+ new note/i }).click();
-
-    cy.findByRole("textbox", { name: /title/i }).type(testNote.title);
-    cy.findByRole("textbox", { name: /body/i }).type(testNote.body);
 
     cy.findByRole("textbox", { name: /balance/i }).type(
       String(numericValues.balance),
@@ -71,22 +49,13 @@ describe("smoke tests", () => {
       String(numericValues.savings),
     );
 
-    cy.findByRole("button", { name: /save/i }).click();
-
-    cy.findByText(testNote.title);
-    cy.findByText(testNote.body);
-
-    cy.findByRole("button", { name: /delete/i }).click();
-
-    cy.findByText("No notes yet");
-
-    cy.visit("/dashboard");
+    cy.findByRole("button", { name: /submit/i }).click();
 
     cy.findByText(`Balance: ${numericValues.balance}`);
     cy.findByText(`Income: ${numericValues.income}`);
     cy.findByText(`Savings: ${numericValues.savings}`);
 
-    cy.visit("/updatefinancialdata");
+    cy.findByRole("button", { name: /edit details/i }).click();
 
     cy.findByRole("textbox", { name: /balance/i })
       .clear()

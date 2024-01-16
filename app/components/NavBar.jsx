@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Form } from "@remix-run/react";
 
 const user = {
   name: "Tom Cook",
@@ -60,7 +61,7 @@ const NavBar = () => {
                   </div>
                 </div>
                 <div className="hidden md:block">
-                  <div className="ml-4 flex items-center md:ml-6">
+                  <div className="ml-4 flex items-center md:ml-6 space-x-4">
                     <button
                       type="button"
                       className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -69,7 +70,6 @@ const NavBar = () => {
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
-
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
@@ -111,6 +111,14 @@ const NavBar = () => {
                         </Menu.Items>
                       </Transition>
                     </Menu>
+                    <Form action="/logout" method="post">
+                      <button
+                        type="submit"
+                        className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+                      >
+                        Logout
+                      </button>
+                    </Form>
                   </div>
                 </div>
                 <div className="-mr-2 flex md:hidden">
