@@ -37,34 +37,33 @@ export default function Dashboard() {
             </h1>
           </div>
         </header>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* Your content */}
-            <div>
-              
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                      <FinancialDetailsCard financialData={data} />
-                  </Grid>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          {/* Your content */}
+          <div>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <FinancialDetailsCard financialData={data} />
                 </Grid>
-              </Box>
-            </div>
-            {/* Display financial details */}
-            <div>
-              <h2>Financial Details</h2>
-              {data ? (
-                <>
-                  <p>ID: {data.id}</p>
-                  <p>Balance: {data.balance}</p>
-                  <p>Income: {data.income}</p>
-                  <p>Savings: {data.savings}</p>
-                  {/* Add more details as needed */}
-                </>
-              ) : (
-                <p>No financial details available.</p>
-              )}
-            </div>
+              </Grid>
+            </Box>
           </div>
+          {/* Display financial details */}
+          <div>
+            <h2>Financial Details</h2>
+            {data ? (
+              <>
+                <p>ID: {data.id}</p>
+                <p>Balance: {data.balance}</p>
+                <p>Income: {data.income}</p>
+                <p>Savings: {data.savings}</p>
+                {/* Add more details as needed */}
+              </>
+            ) : (
+              <p>No financial details available.</p>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
