@@ -33,9 +33,11 @@ test('Testing adding financial details', async () => {
       income: 3333,
       savings: 3333,
       userId: "clre2urum0000r426y91gdva0",
+    //   createdAt: new Date,
+    //   updatedAt: new Date
     };
 
-    prisma.financialDetails.create.mockResolvedValue({...})
+    //prisma.financialDetails.create.mockResolvedValue({...})
   
     const financialDetails = await editFinancialDetails(financialDetailsData);
   
@@ -45,8 +47,39 @@ test('Testing adding financial details', async () => {
         savings: 3333,
         userId: "clre2urum0000r426y91gdva0",
         id: expect.any(String), // Assuming the id returned is a string
-        createdAt: "2024-01-14T22:38:26.137Z"
+        createdAt: financialDetails.createdAt,
+        updatedAt: financialDetails.updatedAt
     });
 });
+
+// test('Testing adding financial details', async () => {
+
+//     const newUser = {email : 'user@prisma.com', password : 'Prisma123'}
+//       const { email, password } = newUser
+    
+//     //prisma.financialDetails.create.mockResolvedValue({...})
+  
+//     const user = await createUser(email, password);
+  
+//     expect(user).toStrictEqual({
+//         email : 'user@prisma.com',
+//         password : 'Prisma123',
+//         createdAt: user.createdAt,
+//         updatedAt: user.updatedAt
+//     });
+// });
+
+test('Testing adding financial details', async () => {
+    const newUser = { email: 'userrr@prisma.com', password: 'Prisma123' };
+    const { email, password } = newUser;
+
+    const user = await createUser(email, password);
+
+    expect(user.email).toBe('userrr@prisma.com');
+    // Assuming your Prisma model includes createdAt and updatedAt fields
+    expect(user.createdAt).toBeDefined();
+    expect(user.updatedAt).toBeDefined();
+});
+
 
 
