@@ -1,4 +1,4 @@
-import { getFinancialDetails } from "~/models/note.server";
+import { getFinancialDetails } from "~/models/financial.server";
 import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
 import { styled } from "@mui/material/styles";

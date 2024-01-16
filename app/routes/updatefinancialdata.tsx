@@ -14,10 +14,10 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import NavBar from "../components/NavBar";
 import { useLoaderData } from "@remix-run/react";
-import { editFinancialDetails } from "~/models/note.server";
+import { editFinancialDetails } from "~/models/financial.server";
 import { requireUserId } from "~/session.server";
 import { ActionFunction } from "@remix-run/node";
-import { getFinancialDetails } from "~/models/note.server";
+import { getFinancialDetails } from "~/models/financial.server";
 
 export const loader: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);

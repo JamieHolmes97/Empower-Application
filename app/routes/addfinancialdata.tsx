@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
-import { addFinancialDetails } from "~/models/note.server";
+import { addFinancialDetails } from "~/models/financial.server";
 import { Form } from "@remix-run/react";
 
 

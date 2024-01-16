@@ -60,33 +60,39 @@ export default function Index() {
         </div>
 
         <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <div className="mt-6 flex flex-wrap justify-center gap-8">
-            {[
-              {
-                title: "Tracking and Monitoring",
-                description: "Track and Monitor your expenses in a visually pleasing manner allowing you to grasp a picture of your finances",
-              },
-              {
-                title: "Budgeting",
-                description:
-                  "Have the ability to create Budgets and allocate your spending into various categories to help manage your spending and saving ",
-              },
-              {
-                title: "Financial Goals",
-                description:
-                  "Have a goal in mind? Maybe saving for something you need.... or desire? With custom goals you will be able to manage saving towards these goals ",
-              },
-              {
-                title: "Community Tips",
-                description:
-                  "Always wanted to gain some helpful financial tips and tricks from fellow students? Well now you can with integrated community tips and tricks posted by you",
-              },
-            ].map((card) => (
-              <a className="flex flex-col h-48 w-64 justify-center p-4 bg-white rounded-lg shadow-md transition hover:shadow-lg focus:shadow-lg">
-                <h2 className="text-lg font-semibold mb-2">{card.title}</h2>
-                <p className="text-sm">{card.description}</p>
-              </a>
-            ))}
+          <div className="mt-6 bg-black p-6 rounded-lg shadow-md">
+            <div className="flex flex-wrap justify-center gap-8">
+              {[
+                {
+                  title: "Tracking and Monitoring",
+                  description:
+                    "Track and Monitor your expenses in a visually pleasing manner allowing you to grasp a picture of your finances",
+                },
+                {
+                  title: "Budgeting",
+                  description:
+                    "Have the ability to create Budgets and allocate your spending into various categories to help manage your spending and saving ",
+                },
+                {
+                  title: "Financial Goals",
+                  description:
+                    "Have a goal in mind? Maybe saving for something you need.... or desire? With custom goals you will be able to manage saving towards these goals ",
+                },
+                {
+                  title: "Community Tips",
+                  description:
+                    "Always wanted to gain some helpful financial tips and tricks from fellow students? Well now you can with integrated community tips and tricks posted by you",
+                },
+              ].map((card, index) => (
+                <a
+                  key={index}
+                  className="flex flex-col h-48 w-64 justify-center p-4 bg-white rounded-lg shadow-md transition hover:shadow-lg focus:shadow-lg"
+                >
+                  <h2 className="text-lg font-semibold mb-2">{card.title}</h2>
+                  <p className="text-sm">{card.description}</p>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
