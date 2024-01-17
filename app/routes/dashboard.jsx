@@ -9,7 +9,6 @@ import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 
 export async function loader({ request }) {
-  console.log("Loader function is being executed");
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
   return financialDetails;
@@ -25,7 +24,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Dashboard() {
   const data = useLoaderData();
-  console.log({ data });
   return (
     <>
       <div className="min-h-full">
@@ -57,7 +55,6 @@ export default function Dashboard() {
                 <p>Balance: {data.balance}</p>
                 <p>Income: {data.income}</p>
                 <p>Savings: {data.savings}</p>
-                {/* Add more details as needed */}
               </>
             ) : (
               <p>No financial details available.</p>
