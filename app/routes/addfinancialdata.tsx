@@ -3,6 +3,7 @@ import { redirect, json } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
 import { addFinancialDetails } from "~/models/financial.server";
 import { Form } from "@remix-run/react";
+import { handleInputNumber } from "~/utils";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -21,12 +22,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function AddFinancialData() {
-
-  const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-    const inputValue = event.currentTarget.value;
-    const numericValue = inputValue.replace(/[^0-9]/g, "");
-    event.currentTarget.value = numericValue;
-  };
 
   return (
     <div className="min-h-full bg-gray-100">
@@ -51,7 +46,7 @@ export default function AddFinancialData() {
                   name="balance"
                   className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
                   type="number" 
-                  onInput={handleInput} 
+                  onInput={handleInputNumber} 
                 />
               </div>
             </div>
@@ -71,7 +66,7 @@ export default function AddFinancialData() {
                   name="income"
                   className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
                   type="number"
-                  onInput={handleInput}
+                  onInput={handleInputNumber}
                 />
               </div>
             </div>
@@ -91,7 +86,7 @@ export default function AddFinancialData() {
                   name="savings"
                   className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
                   type="number"
-                  onInput={handleInput}
+                  onInput={handleInputNumber}
                 />
               </div>
             </div>
