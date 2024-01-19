@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
 import { addFinancialDetails } from "~/models/financial.server";
 import { Form } from "@remix-run/react";
@@ -22,7 +22,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function AddFinancialData() {
-
   return (
     <div className="min-h-full bg-gray-100">
       <div className="min-h-screen flex flex-col justify-center items-center">
@@ -45,8 +44,8 @@ export default function AddFinancialData() {
                   autoFocus={true}
                   name="balance"
                   className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                  type="number" 
-                  onInput={handleInputNumber} 
+                  type="number"
+                  onInput={handleInputNumber}
                 />
               </div>
             </div>

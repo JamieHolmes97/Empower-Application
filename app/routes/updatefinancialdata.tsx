@@ -8,6 +8,8 @@ import { requireUserId } from "~/session.server";
 import { ActionFunction } from "@remix-run/node";
 import { getFinancialDetails } from "~/models/financial.server";
 import { handleInputNumber } from "~/utils";
+import { createBudget, createCategory, createExpense } from "~/models/budget.server";
+
 
 export const loader: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
@@ -26,7 +28,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const income = parseInteger(formData.get("income"));
   const savings = parseInteger(formData.get("savings"));
 
+  // const name = 'Testing Category'
+  // const totalAmount = 250
+  // const duration = 20
+  // const budgetId = 'clrkq9a9q0002r4g5ksxsn8o8'
+  // const amount = 50
+
   await editFinancialDetails({ balance, savings, income, userId });
+  //await createBudget({name, totalAmount, duration, userId})
+  //await createCategory ({ name, amount, budgetId, })
 
   return redirect(`/dashboard`);
 };
