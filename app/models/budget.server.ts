@@ -70,4 +70,29 @@ export function createExpense({
   });
 }
 
+export async function getUniqueBudgetIDAndUserID({
+  id,
+  userId,
+}: Pick<Budget, "id"> & {
+  userId: User["id"];
+}) {
+  return prisma.budget.findFirst({
+    where: { id: id, userId },
+  });
+}
+
+export function getUserBudgets({ userId }: { userId: User["id"] }) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      budgets: {
+        include: {
+          categories: true,
+          expenses: true,
+        },
+      },
+    },
+  })
+  .then(user => user?.budgets || []);
+}
 

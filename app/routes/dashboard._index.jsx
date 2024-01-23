@@ -5,17 +5,22 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import FinancialDetailsCard from "../components/financialdetailscard";
+import FinancialDetailsCard from "../components/FinancialDetailsCard";
 import NavBar from "../components/NavBar";
+import BudgetDetailsCard from '../components/BudgetDetailsCard'
+import { getUserBudgets } from "~/models/budget.server";
 
 export async function loader({ request }) {
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
+  const usersBudgets = await getUserBudgets({userId})
+
   return financialDetails;
 }
 
 export default function Dashboard() {
   const data = useLoaderData();
+  console.log({data})
   return (
     <>
       <div className="min-h-full">
@@ -35,6 +40,13 @@ export default function Dashboard() {
                 <Grid item xs={12}>
                   <FinancialDetailsCard financialData={data} />
                 </Grid>
+
+                <Grid item xs={6}>
+                  <BudgetDetailsCard/>
+                </Grid>
+                <Grid item xs={6}>
+                </Grid>
+
               </Grid>
             </Box>
           </div>

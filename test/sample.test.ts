@@ -46,7 +46,7 @@ test('Testing adding financial details', async () => {
         income: 3333,
         savings: 3333,
         userId: "clre2urum0000r426y91gdva0",
-        id: expect.any(String), // Assuming the id returned is a string
+        id: expect.any(String),
         createdAt: financialDetails.createdAt,
         updatedAt: financialDetails.updatedAt
     });
@@ -76,7 +76,6 @@ test('Testing adding financial details', async () => {
     const user = await createUser(email, password);
 
     expect(user.email).toBe('userrr@prisma.com');
-    // Assuming your Prisma model includes createdAt and updatedAt fields
     expect(user.createdAt).toBeDefined();
     expect(user.updatedAt).toBeDefined();
 });
