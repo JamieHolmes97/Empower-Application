@@ -27,8 +27,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const BudgetDetailsCard = ({ budgetData }) => {
-  const [budgetExists, createBudget] = useState(false);
-    //console.log({budgetData})
   return (
     <>
       <ThemeProvider theme={darkTheme}>
@@ -45,9 +43,11 @@ const BudgetDetailsCard = ({ budgetData }) => {
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {budgetExists ? (
+                    {budgetData ? (
                       <Item>
                         <h1>you have a budget</h1>
+                        <h1>{ budgetData[0].name}</h1>
+                        <h1>{ budgetData[0].categories[0].name}</h1>
                       </Item>
                     ) : (
                       <>

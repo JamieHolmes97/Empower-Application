@@ -14,8 +14,7 @@ export async function loader({ request }) {
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
   const usersBudgets = await getUserBudgets({userId})
-
-  return financialDetails;
+  return {financialDetails,usersBudgets};
 }
 
 export default function Dashboard() {
@@ -38,11 +37,11 @@ export default function Dashboard() {
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <FinancialDetailsCard financialData={data} />
+                  <FinancialDetailsCard financialData={data.financialDetails} />
                 </Grid>
 
                 <Grid item xs={6}>
-                  <BudgetDetailsCard/>
+                  <BudgetDetailsCard budgetData={data.usersBudgets}/>
                 </Grid>
                 <Grid item xs={6}>
                 </Grid>
