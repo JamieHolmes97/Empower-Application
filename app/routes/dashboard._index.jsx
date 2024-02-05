@@ -40,7 +40,7 @@ export default function Dashboard() {
                   <FinancialDetailsCard financialData={data.financialDetails} />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <BudgetDetailsCard budgetData={data.usersBudgets}/>
                 </Grid>
                 <Grid item xs={6}>
@@ -51,14 +51,8 @@ export default function Dashboard() {
           </div>
           {/* Display financial details */}
           <div>
-            <h2>Financial Details</h2>
             {data ? (
-              <>
-                <p>ID: {data.id}</p>
-                <p>Balance: {data.balance}</p>
-                <p>Income: {data.income}</p>
-                <p>Savings: {data.savings}</p>
-              </>
+             null
             ) : (
               <p>No financial details available.</p>
             )}

@@ -31,7 +31,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
     const category = await createCategory({name, amount, budgetId })
   
-    return redirect(`/dashboard`);
+    // return redirect(`/dashboard`);
+    return category
   };
 
 export default function CreateBudgetCategory () {
@@ -96,12 +97,19 @@ export default function CreateBudgetCategory () {
                 />
               </div>
             </div>
+             <button
+              type="submit"
+              className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+            >
+              Add Category 
+            </button>
             <button
               type="submit"
               className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
             >
               Finish 
             </button>
+           
           </Form>
         </div>
       </div>

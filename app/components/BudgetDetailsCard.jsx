@@ -29,32 +29,59 @@ const Item = styled(Paper)(({ theme }) => ({
 const BudgetDetailsCard = ({ budgetData }) => {
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
-        <Box sx={{ minWidth: 275 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Personal Budget Details
-              </Typography>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
+      {budgetData.map((budgetItem) => (
+        <div className="mb-4">
+        <ThemeProvider theme={darkTheme}>
+          <Box sx={{ minWidth: 275 }}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Personal Budget Details
+                </Typography>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Grid container spacing={2}>
                     {budgetData ? (
-                      <Item>
-                        <h1>you have a budget</h1>
-                        <h1>{ budgetData[0].name}</h1>
-                        <h1>{ budgetData[0].categories[0].name}</h1>
-                      </Item>
+                      <>
+                        <>
+                          <Grid item xs={3}>
+                            <Item>
+                              <h1>Budget Name: {budgetItem.name}</h1>
+                            </Item>
+                          </Grid>
+                          <Grid item xs={9}></Grid>
+                          {budgetItem.categories.map(
+                            (category, categoryIndex) => (
+                              <Grid item xs={3} key={categoryIndex}>
+                                <div className="mb-4">
+                                  <Item>
+                                    <Typography
+                                      variant="subtitle1"
+                                      component="div"
+                                    >
+                                      {category.name}:
+                                    </Typography>
+                                  </Item>
+                                </div>
+                                <Item>
+                                  <Typography variant="h2" component="div">
+                                    £{category.amount}
+                                  </Typography>
+                                </Item>
+                              </Grid>
+                            ),
+                          )}
+                        </>
+                      </>
                     ) : (
                       <>
                         <div className="mb-4">
                           <Item>
                             <h1>
-                              It appears you have not yeat added any budget.
+                              It appears you have not yet added any budget.
                               <br />
                               Please click the icon below to add your own
                               personalised budget.
@@ -71,12 +98,13 @@ const BudgetDetailsCard = ({ budgetData }) => {
                       </>
                     )}
                   </Grid>
-                </Grid>
-              </Box>
-            </CardContent>
-          </Card>
-        </Box>
-      </ThemeProvider>
+                </Box>
+              </CardContent>
+            </Card>
+          </Box>
+        </ThemeProvider>
+        </div>
+      ))}
     </>
   );
 };
