@@ -43,13 +43,9 @@ export default function Dashboard() {
                 <Grid item xs={12}>
                   <BudgetDetailsCard budgetData={data.usersBudgets}/>
                 </Grid>
-                <Grid item xs={6}>
-                </Grid>
-
               </Grid>
             </Box>
           </div>
-          {/* Display financial details */}
           <div>
             {data ? (
              null

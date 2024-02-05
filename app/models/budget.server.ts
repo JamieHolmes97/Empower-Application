@@ -82,17 +82,39 @@ export async function getUniqueBudgetIDAndUserID({
 }
 
 export function getUserBudgets({ userId }: { userId: User["id"] }) {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    include: {
-      budgets: {
-        include: {
-          categories: true,
-          expenses: true,
+  return prisma.user
+    .findUnique({
+      where: { id: userId },
+      include: {
+        budgets: {
+          include: {
+            categories: true,
+            expenses: true,
+          },
         },
       },
-    },
-  })
-  .then(user => user?.budgets || []);
+    })
+    .then((user) => user?.budgets || []);
 }
 
+export async function deleteBudgetById(budgetId: Budget["id"]) {
+  const existingBudget = await prisma.budget.findUnique({
+    where: { id: budgetId },
+  });
+
+  if (!existingBudget) {
+    throw new Error(`Budget with id ${budgetId} not found`);
+  }
+
+  await prisma.expense.deleteMany({
+    where: { budgetId },
+  });
+
+  await prisma.category.deleteMany({
+    where: { budgetId },
+  });
+
+  return prisma.budget.delete({
+    where: { id: budgetId },
+  });
+}

@@ -11,6 +11,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "@remix-run/react";
+import { deleteBudgetById } from "~/models/budget.server";
 
 const darkTheme = createTheme({
   palette: {
@@ -26,83 +27,110 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+export const action = async ({ request }) => {
+
+ return deleteBudgetById()
+  
+  };
+
 const BudgetDetailsCard = ({ budgetData }) => {
   return (
     <>
       {budgetData.map((budgetItem) => (
         <div className="mb-4">
-        <ThemeProvider theme={darkTheme}>
-          <Box sx={{ minWidth: 275 }}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Personal Budget Details
-                </Typography>
-                <Box sx={{ flexGrow: 1 }}>
-                  <Grid container spacing={2}>
-                    {budgetData ? (
-                      <>
+          <ThemeProvider theme={darkTheme}>
+            <Box sx={{ minWidth: 275 }}>
+              <Card variant="outlined">
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {budgetItem.name} Budget Details
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Budget Duration: {budgetItem.duration} Days Remaining
+                    </Typography>
+                  </Box>
+
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2}>
+                      {budgetData ? (
                         <>
-                          <Grid item xs={3}>
-                            <Item>
-                              <h1>Budget Name: {budgetItem.name}</h1>
-                            </Item>
-                          </Grid>
-                          <Grid item xs={9}></Grid>
-                          {budgetItem.categories.map(
-                            (category, categoryIndex) => (
-                              <Grid item xs={3} key={categoryIndex}>
-                                <div className="mb-4">
+                          <>
+                            {budgetItem.categories.map(
+                              (category, categoryIndex) => (
+                                <Grid item xs={3} key={categoryIndex}>
+                                  <div className="mb-4">
+                                    <Item>
+                                      <Typography
+                                        variant="subtitle1"
+                                        component="div"
+                                      >
+                                        {category.name}:
+                                      </Typography>
+                                    </Item>
+                                  </div>
                                   <Item>
-                                    <Typography
-                                      variant="subtitle1"
-                                      component="div"
-                                    >
-                                      {category.name}:
+                                    <Typography variant="h2" component="div">
+                                      £{category.amount}
                                     </Typography>
                                   </Item>
-                                </div>
-                                <Item>
-                                  <Typography variant="h2" component="div">
-                                    £{category.amount}
-                                  </Typography>
-                                </Item>
-                              </Grid>
-                            ),
-                          )}
+                                </Grid>
+                              ),
+                            )}
+                          </>
                         </>
-                      </>
-                    ) : (
-                      <>
-                        <div className="mb-4">
-                          <Item>
-                            <h1>
-                              It appears you have not yet added any budget.
-                              <br />
-                              Please click the icon below to add your own
-                              personalised budget.
-                            </h1>
-                          </Item>
-                        </div>
-                        <div>
-                          <Item>
-                            <Link to="/createbudget">
-                              <AddIcon />
-                            </Link>
-                          </Item>
-                        </div>
-                      </>
-                    )}
-                  </Grid>
-                </Box>
-              </CardContent>
-            </Card>
-          </Box>
-        </ThemeProvider>
+                      ) : (
+                        <>
+                          <div className="mb-4">
+                            <Item>
+                              <h1>
+                                It appears you have not yet added any budget.
+                                <br />
+                                Please click the icon below to add your own
+                                personalised budget.
+                              </h1>
+                            </Item>
+                          </div>
+                          <div>
+                            <Item>
+                              <Link to="/createbudget">
+                                <AddIcon />
+                              </Link>
+                            </Item>
+                          </div>
+                        </>
+                      )}
+                    </Grid>
+                  </Box>
+                </CardContent>
+                <CardActions>
+              <Grid container justifyContent="space-between">
+                <Grid item>
+                  <Button size="small">View More Details</Button>
+                </Grid>
+                <Grid item>
+                  <Button size="small">
+                    Delete Budget
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardActions>
+              </Card>
+            </Box>
+          </ThemeProvider>
         </div>
       ))}
     </>
