@@ -8,8 +8,6 @@ import { requireUserId } from "~/session.server";
 import { ActionFunction } from "@remix-run/node";
 import { getFinancialDetails } from "~/models/financial.server";
 import { handleInputNumber } from "~/utils";
-import { createBudget, createCategory, createExpense } from "~/models/budget.server";
-
 
 export const loader: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
@@ -22,6 +20,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const parseInteger = (value: FormDataEntryValue | null): number => {
     return value && typeof value === "string" ? parseInt(value, 10) : 0;
+    
   };
 
   const balance = parseInteger(formData.get("balance"));

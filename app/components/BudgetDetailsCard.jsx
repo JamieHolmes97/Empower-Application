@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -11,7 +10,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "@remix-run/react";
-import { deleteBudgetById } from "~/models/budget.server";
+import { deleteBudgetById } from "../models/budget.server";
 
 const darkTheme = createTheme({
   palette: {
@@ -27,13 +26,13 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export const action = async ({ request }) => {
-
- return deleteBudgetById()
-  
-  };
+const handleDelete = async (budgetID) => {
+  console.log(budgetID)
+  await deleteBudgetById(budgetID)
+}
 
 const BudgetDetailsCard = ({ budgetData }) => {
+
   return (
     <>
       {budgetData.map((budgetItem) => (
@@ -122,7 +121,7 @@ const BudgetDetailsCard = ({ budgetData }) => {
                   <Button size="small">View More Details</Button>
                 </Grid>
                 <Grid item>
-                  <Button size="small">
+                  <Button size="small" onClick={() => handleDelete(budgetItem.id)}>
                     Delete Budget
                   </Button>
                 </Grid>

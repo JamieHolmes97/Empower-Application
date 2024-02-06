@@ -14,7 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   
     const name = formData.get("budgetName") as string;
     const totalAmount = parseInteger(formData.get("amount"));
-    const duration = parseInteger(formData.get("duation"));
+    const duration = parseInteger(formData.get("duration"));
 
     const budget = await createBudget({ name , totalAmount, duration, userId})
   

@@ -7,11 +7,13 @@ import { Form, useLoaderData, Link } from "@remix-run/react";
 import {
   getUniqueBudgetIDAndUserID,
   createCategory,
+  getCategoriesByBudgetId,
 } from "~/models/budget.server";
 import { handleInputNumber } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
+  const categories = await getCategoriesByBudgetId(params.budgetId as string);
   invariant(params.budgetId, "budgetId not found");
 
   const budget = await getUniqueBudgetIDAndUserID({
@@ -21,7 +23,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   if (!budget) {
     throw new Response("No budget Found", { status: 404 });
   }
-  return json({ budget });
+  return json({ budget, categories });
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
@@ -39,6 +41,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
 export default function CreateBudgetCategory() {
   const data = useLoaderData<typeof loader>();
+  console.log(data);
 
   return (
     <div className="min-h-full bg-gray-100">
@@ -58,12 +61,18 @@ export default function CreateBudgetCategory() {
           <h2 className="text-2xl font-semibold mb-6">
             Total Budget Remaining = £{data.budget.totalAmount}
           </h2>
-
-          
-
-
-
-
+          <h3 className="text-2xl font-semibold mb-6">
+            Categories added:{" "}
+            {data.categories.map((category, index) => (
+              <div
+                key={index}
+                className="bg-white shadow-md rounded p-4 mb-4 flex justify-between"
+              >
+                <p className="text-base font-semibold">{category.name}</p>
+                <p className="text-sm text-gray-500">£{category.amount}</p>
+              </div>
+            ))}
+          </h3>
           <Form method="post" className="space-y-6">
             <div>
               <label
@@ -110,7 +119,7 @@ export default function CreateBudgetCategory() {
             </button>
             <Link
               to="/dashboard"
-              className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+              className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
             >
               Finish
             </Link>

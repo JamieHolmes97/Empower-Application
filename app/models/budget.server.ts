@@ -97,6 +97,16 @@ export function getUserBudgets({ userId }: { userId: User["id"] }) {
     .then((user) => user?.budgets || []);
 }
 
+export async function getCategoriesByBudgetId(budgetId: string): Promise<Category[]> {
+  const categories = await prisma.category.findMany({
+    where: {
+      budgetId: budgetId,
+    },
+  });
+  
+  return categories;
+}
+
 export async function deleteBudgetById(budgetId: Budget["id"]) {
   const existingBudget = await prisma.budget.findUnique({
     where: { id: budgetId },
