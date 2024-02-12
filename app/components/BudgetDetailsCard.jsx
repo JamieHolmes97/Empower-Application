@@ -27,12 +27,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const handleDelete = async (budgetID) => {
-  console.log(budgetID)
-  await deleteBudgetById(budgetID)
-}
+  console.log(budgetID);
+  await deleteBudgetById(budgetID);
+};
 
-const BudgetDetailsCard = ({ budgetData }) => {
-
+const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
   return (
     <>
       {budgetData.map((budgetItem) => (
@@ -67,7 +66,6 @@ const BudgetDetailsCard = ({ budgetData }) => {
                     <Grid container spacing={2}>
                       {budgetData ? (
                         <>
-                          <>
                             {budgetItem.categories.map(
                               (category, categoryIndex) => (
                                 <Grid item xs={3} key={categoryIndex}>
@@ -89,7 +87,6 @@ const BudgetDetailsCard = ({ budgetData }) => {
                                 </Grid>
                               ),
                             )}
-                          </>
                         </>
                       ) : (
                         <>
@@ -116,17 +113,35 @@ const BudgetDetailsCard = ({ budgetData }) => {
                   </Box>
                 </CardContent>
                 <CardActions>
-              <Grid container justifyContent="space-between">
-                <Grid item>
-                  <Button size="small">View More Details</Button>
-                </Grid>
-                <Grid item>
-                  <Button size="small" onClick={() => handleDelete(budgetItem.id)}>
-                    Delete Budget
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardActions>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      {/* <Button size="small">View More Details</Button> */}
+                      {viewMoreDetails ? (
+                        <Link
+                          to={`budget/${budgetItem.id}`}
+                          className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
+                        >
+                          View More Details
+                        </Link>
+                      ) : (
+                        <Link
+                          to= '/dashboard'
+                          className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
+                        >
+                          Dashboard
+                        </Link>
+                      )}
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        size="small"
+                        onClick={() => handleDelete(budgetItem.id)}
+                      >
+                        Delete Budget
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </CardActions>
               </Card>
             </Box>
           </ThemeProvider>

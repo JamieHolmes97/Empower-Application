@@ -3,7 +3,6 @@ import { requireUserId } from "~/session.server";
 import { useLoaderData } from "@remix-run/react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import FinancialDetailsCard from "../components/FinancialDetailsCard";
 import NavBar from "../components/NavBar";
@@ -32,7 +31,6 @@ export default function Dashboard() {
           </div>
         </header>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          {/* Your content */}
           <div>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
@@ -41,7 +39,7 @@ export default function Dashboard() {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <BudgetDetailsCard budgetData={data.usersBudgets}/>
+                  <BudgetDetailsCard budgetData={data.usersBudgets} viewMoreDetails={true}/>
                 </Grid>
               </Grid>
             </Box>
