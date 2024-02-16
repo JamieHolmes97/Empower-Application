@@ -128,3 +128,19 @@ export async function deleteBudgetById(budgetId: Budget["id"]) {
     where: { id: budgetId },
   });
 }
+
+export async function updateCategoryAmount(categoryId: Category["id"], newAmount: number) {
+  const existingCategory = await prisma.category.findUnique({
+    where: { id: categoryId },
+  });
+
+  if (!existingCategory) {
+    throw new Error(`Category with id ${categoryId} not found`);
+  }
+
+  return prisma.category.update({
+    where: { id: categoryId },
+    data: { amount: newAmount },
+  });
+}
+
