@@ -19,6 +19,7 @@ import { prisma } from "~/db.server";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import React from "react";
+import ExpenseDetailsCard from "../components/ExpensesCard";
 
 const style = {
   position: "absolute" as "absolute",
@@ -83,7 +84,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export default function BudgetsDashboard() {
-  const [addExpense, setAddExpense] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -126,88 +126,120 @@ export default function BudgetsDashboard() {
             </Button>
           </div>
         </header>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <div>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} />
+                </Grid>
+              </Grid>
+            </Box>
+          </div>
+          <div>{data ? null : <p>No financial details available.</p>}</div>
+        </div>
         <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-          <Form method="post" className="space-y-6">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Expense Name
-              </label>
-              <div className="mt-1">
-                <input
-                  id="name"
-                  required
-                  autoFocus={true}
-                  name="expenseName"
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                />
-              </div>
-            </div>
+          <Box
+            className="fixed inset-0 flex items-center justify-center"
+            style={{ zIndex: 9999 }}
+          >
+            <Box className="bg-white p-8 rounded-lg shadow-md w-full max-w-md ">
+              <h2 className="text-2xl font-semibold mb-6">
+                Would you like to add an expense to your budget?
+              </h2>
+              <h3 className="text-1xl mb-6">
+                If so fill in the detials below. The budget will automatically
+                update with these details.
+              </h3>
+              <Form method="post" className="space-y-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Expense Name
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="name"
+                      required
+                      autoFocus={true}
+                      name="expenseName"
+                      className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Expense Amount
-              </label>
-              <div className="mt-1">
-                <input
-                  id="name"
-                  required
-                  autoFocus={true}
-                  name="expenseAmount"
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                />
-              </div>
-            </div>
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Expense Amount
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="name"
+                      required
+                      autoFocus={true}
+                      name="expenseAmount"
+                      className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label
-                htmlFor="expenseCategory"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Category
-              </label>
-              <div className="mt-1">
-                <select
-                  id="expenseCategory"
-                  name="expenseCategory"
-                  required
-                  autoFocus={true}
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                >
-                  <option value="">Select a category from your Budget</option>
-                  {data.filteredBudget.length > 0 &&
-                    data.filteredBudget[0].categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
+                <div>
+                  <label
+                    htmlFor="expenseCategory"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Category
+                  </label>
+                  <div className="mt-1">
+                    <select
+                      id="expenseCategory"
+                      name="expenseCategory"
+                      required
+                      autoFocus={true}
+                      className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                    >
+                      <option value="">
+                        Select a category from your Budget
                       </option>
-                    ))}
-                </select>
-              </div>
-            </div>
+                      {data.filteredBudget.length > 0 &&
+                        data.filteredBudget[0].categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
 
-            <button
-              type="submit"
-              className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-              onClick={() => {
-                setTimeout(() => {
-                  handleClose();
-                }, 1000);
-              }}
-            >
-              Add Expense
-            </button>
-          </Form>
+                <button
+                  type="submit"
+                  className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+                  onClick={() => {
+                    setTimeout(() => {
+                      handleClose();
+                    }, 1000);
+                  }}
+                >
+                  Add Expense
+                </button>
+                <button
+                  className="w-full rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:bg-red-400"
+                  onClick={handleClose}
+                >
+                  Close
+                </button>
+              </Form>
+            </Box>
           </Box>
         </Modal>
       </div>

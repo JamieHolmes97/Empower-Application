@@ -66,27 +66,27 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                     <Grid container spacing={2}>
                       {budgetData ? (
                         <>
-                            {budgetItem.categories.map(
-                              (category, categoryIndex) => (
-                                <Grid item xs={3} key={categoryIndex}>
-                                  <div className="mb-4">
-                                    <Item>
-                                      <Typography
-                                        variant="subtitle1"
-                                        component="div"
-                                      >
-                                        {category.name}:
-                                      </Typography>
-                                    </Item>
-                                  </div>
+                          {budgetItem.categories.map(
+                            (category, categoryIndex) => (
+                              <Grid item xs={3} key={categoryIndex}>
+                                <div className="mb-4">
                                   <Item>
-                                    <Typography variant="h2" component="div">
-                                      £{category.amount}
+                                    <Typography
+                                      variant="subtitle1"
+                                      component="div"
+                                    >
+                                      {category.name}:
                                     </Typography>
                                   </Item>
-                                </Grid>
-                              ),
-                            )}
+                                </div>
+                                <Item>
+                                  <Typography variant="h2" component="div">
+                                    £{category.amount}
+                                  </Typography>
+                                </Item>
+                              </Grid>
+                            ),
+                          )}
                         </>
                       ) : (
                         <>
@@ -125,7 +125,7 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                         </Link>
                       ) : (
                         <Link
-                          to= '/dashboard'
+                          to="/dashboard"
                           className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
                         >
                           Dashboard
