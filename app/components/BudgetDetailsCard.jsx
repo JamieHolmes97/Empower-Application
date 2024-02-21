@@ -34,119 +34,122 @@ const handleDelete = async (budgetID) => {
 const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
   return (
     <>
-      {budgetData.map((budgetItem) => (
+      {budgetData.length > 0 ? (
+        budgetData.map((budgetItem) => (
+          <div key={budgetItem.id} className="mb-4">
+            <ThemeProvider theme={darkTheme}>
+              <Box sx={{ minWidth: 275 }}>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {budgetItem.name} Budget Details
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: 14 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        Budget Duration: {budgetItem.duration} Days Remaining
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Grid container spacing={2}>
+                        {budgetItem.categories.map(
+                          (category, categoryIndex) => (
+                            <Grid item xs={3} key={categoryIndex}>
+                              <div className="mb-4">
+                                <Item>
+                                  <Typography
+                                    variant="subtitle1"
+                                    component="div"
+                                  >
+                                    {category.name}:
+                                  </Typography>
+                                </Item>
+                              </div>
+                              <Item>
+                                <Typography variant="h2" component="div">
+                                  £{category.amount}
+                                </Typography>
+                              </Item>
+                            </Grid>
+                          ),
+                        )}
+                      </Grid>
+                    </Box>
+                  </CardContent>
+                  <CardActions>
+                    <Grid container justifyContent="space-between">
+                      <Grid item>
+                        {viewMoreDetails ? (
+                          <Link
+                            to={`budget/${budgetItem.id}`}
+                            className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
+                          >
+                            View More Details
+                          </Link>
+                        ) : (
+                          <Link
+                            to="/dashboard"
+                            className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
+                          >
+                            Dashboard
+                          </Link>
+                        )}
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          size="small"
+                          onClick={() => handleDelete(budgetItem.id)}
+                        >
+                          Delete Budget
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </CardActions>
+                </Card>
+              </Box>
+            </ThemeProvider>
+          </div>
+        ))
+      ) : (
         <div className="mb-4">
           <ThemeProvider theme={darkTheme}>
             <Box sx={{ minWidth: 275 }}>
               <Card variant="outlined">
-                <CardContent>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      sx={{ fontSize: 14 }}
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      {budgetItem.name} Budget Details
-                    </Typography>
-                    <Typography
-                      sx={{ fontSize: 14 }}
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      Budget Duration: {budgetItem.duration} Days Remaining
-                    </Typography>
-                  </Box>
-
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                      {budgetData ? (
-                        <>
-                          {budgetItem.categories.map(
-                            (category, categoryIndex) => (
-                              <Grid item xs={3} key={categoryIndex}>
-                                <div className="mb-4">
-                                  <Item>
-                                    <Typography
-                                      variant="subtitle1"
-                                      component="div"
-                                    >
-                                      {category.name}:
-                                    </Typography>
-                                  </Item>
-                                </div>
-                                <Item>
-                                  <Typography variant="h2" component="div">
-                                    £{category.amount}
-                                  </Typography>
-                                </Item>
-                              </Grid>
-                            ),
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          <div className="mb-4">
-                            <Item>
-                              <h1>
-                                It appears you have not yet added any budget.
-                                <br />
-                                Please click the icon below to add your own
-                                personalised budget.
-                              </h1>
-                            </Item>
-                          </div>
-                          <div>
-                            <Item>
-                              <Link to="/createbudget">
-                                <AddIcon />
-                              </Link>
-                            </Item>
-                          </div>
-                        </>
-                      )}
-                    </Grid>
-                  </Box>
-                </CardContent>
-                <CardActions>
-                  <Grid container justifyContent="space-between">
-                    <Grid item>
-                      {/* <Button size="small">View More Details</Button> */}
-                      {viewMoreDetails ? (
-                        <Link
-                          to={`budget/${budgetItem.id}`}
-                          className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
-                        >
-                          View More Details
-                        </Link>
-                      ) : (
-                        <Link
-                          to="/dashboard"
-                          className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        size="small"
-                        onClick={() => handleDelete(budgetItem.id)}
-                      >
-                        Delete Budget
-                      </Button>
-                    </Grid>
-                  </Grid>
+                <CardActions className="flex justify-center">
+                  <Item>
+                    <Link to="/createbudget">
+                      <AddIcon fontSize="large" />
+                    </Link>
+                  </Item>
                 </CardActions>
+                <CardContent>
+                  <Item>
+                    <Typography variant="h6">
+                      It appears you have not yet added any budgets.
+                      <br />
+                      Please click the icon above to add your own personalised
+                      budget.
+                    </Typography>
+                  </Item>
+                </CardContent>
               </Card>
             </Box>
           </ThemeProvider>
         </div>
-      ))}
+      )}
     </>
   );
 };

@@ -6,19 +6,19 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import FinancialDetailsCard from "../components/FinancialDetailsCard";
 import NavBar from "../components/NavBar";
-import BudgetDetailsCard from '../components/BudgetDetailsCard'
+import BudgetDetailsCard from "../components/BudgetDetailsCard";
 import { getUserBudgets } from "~/models/budget.server";
 
 export async function loader({ request }) {
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
-  const usersBudgets = await getUserBudgets({userId})
-  return {financialDetails,usersBudgets};
+  const usersBudgets = await getUserBudgets({ userId });
+  return { financialDetails, usersBudgets };
 }
 
 export default function Dashboard() {
   const data = useLoaderData();
-  console.log({data})
+  console.log({ data });
   return (
     <>
       <div className="min-h-full">
@@ -37,20 +37,16 @@ export default function Dashboard() {
                 <Grid item xs={12}>
                   <FinancialDetailsCard financialData={data.financialDetails} />
                 </Grid>
-
                 <Grid item xs={12}>
-                  <BudgetDetailsCard budgetData={data.usersBudgets} viewMoreDetails={true}/>
+                  <BudgetDetailsCard
+                    budgetData={data.usersBudgets}
+                    viewMoreDetails={true}
+                  />
                 </Grid>
               </Grid>
             </Box>
           </div>
-          <div>
-            {data ? (
-             null
-            ) : (
-              <p>No financial details available.</p>
-            )}
-          </div>
+          <div>{data ? null : <p>No financial details available.</p>}</div>
         </div>
       </div>
     </>
