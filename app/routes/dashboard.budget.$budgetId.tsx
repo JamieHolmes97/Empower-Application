@@ -51,7 +51,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
     budgetId,
   });
 
-  // Get current category amount
   const category = await prisma.category.findUnique({
     where: { id: categoryId },
     select: { amount: true },
