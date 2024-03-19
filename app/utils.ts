@@ -80,3 +80,21 @@ export const handleInputNumber = (event: React.FormEvent<HTMLInputElement>) => {
   const numericValue = inputValue.replace(/[^0-9]/g, "");
   event.currentTarget.value = numericValue;
 };
+
+ export const categories = [
+  "Housing",
+  "Utilities",
+  "Transportation",
+  "Food",
+  "Healthcare",
+  "Insurance",
+  "Debt Payments",
+  "Entertainment",
+  "Clothing",
+  "Education",
+  "Savings",
+  "Personal Care",
+  "Gifts/Donations",
+  "Travel",
+  "Miscellaneous"
+];

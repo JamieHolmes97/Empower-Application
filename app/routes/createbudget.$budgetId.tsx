@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { requireUserId } from "~/session.server";
@@ -9,7 +10,8 @@ import {
   createCategory,
   getCategoriesByBudgetId,
 } from "~/models/budget.server";
-import { handleInputNumber } from "~/utils";
+import { handleInputNumber, categories } from "~/utils";
+
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -76,19 +78,26 @@ export default function CreateBudgetCategory() {
           <Form method="post" className="space-y-6">
             <div>
               <label
-                htmlFor="name"
+                htmlFor="category"
                 className="block text-sm font-medium text-gray-700"
               >
-                Category Name
+                Category
               </label>
               <div className="mt-1">
-                <input
-                  id="name"
+                <select
+                  id="category"
                   required
                   autoFocus={true}
                   name="categoryName"
                   className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                />
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
