@@ -36,8 +36,9 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
   const name = formData.get("categoryName") as string;
   const amount = parseInteger(formData.get("amount"));
+  const amountUpdated = parseInteger(formData.get("amount"));
   const budgetId = params.budgetId as string;
-  const category = await createCategory({ name, amount, budgetId });
+  const category = await createCategory({ name, amount, amountUpdated, budgetId });
   return category;
 };
 

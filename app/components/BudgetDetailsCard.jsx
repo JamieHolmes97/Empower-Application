@@ -79,9 +79,18 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                                 </Item>
                               </div>
                               <Item>
-                                <Typography variant="h2" component="div">
-                                  £{category.amount}
-                                </Typography>
+                                <div className="relative">
+                                  <Typography variant="h2" component="div">
+                                    £{category.amountUpdated}
+                                  </Typography>
+                                  <Typography
+                                    variant="subtitle2"
+                                    component="div"
+                                    className="absolute top-0 left-0 text-sm text-gray-500"
+                                  >
+                                    £{category.amount}
+                                  </Typography>
+                                </div>
                               </Item>
                             </Grid>
                           ),

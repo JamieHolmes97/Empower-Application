@@ -27,14 +27,16 @@ export function createBudget({
 export function createCategory({
   name,
   amount,
+  amountUpdated,
   budgetId,
-}: Pick<Category, "name" | "amount"> & {
+}: Pick<Category, "name" | "amount" | "amountUpdated"> & {
   budgetId: Budget["id"];
 }) {
   return prisma.category.create({
     data: {
       name,
       amount,
+      amountUpdated,
       budget: {
         connect: {
           id: budgetId,
@@ -141,7 +143,7 @@ export async function updateCategoryAmount(categoryId: Category["id"], newAmount
 
   return prisma.category.update({
     where: { id: categoryId },
-    data: { amount: newAmount },
+    data: { amountUpdated: newAmount },
   });
 }
 
