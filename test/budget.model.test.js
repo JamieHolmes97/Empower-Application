@@ -1,4 +1,3 @@
-// budget.test.ts
 import {
     createBudget,
     createCategory,

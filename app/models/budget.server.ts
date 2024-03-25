@@ -151,3 +151,21 @@ export async function getAllExpenses(): Promise<Expense[]> {
   return prisma.expense.findMany();
 }
 
+export async function getAllExpensesByUser(userId: string): Promise<Expense[]> {
+  try {
+    const expenses = await prisma.expense.findMany({
+      where: {
+        budget: {
+          user: {
+            id: userId,
+          },
+        },
+      },
+    });
+    return expenses;
+  } catch (error) {
+    console.error("Error fetching all expenses:", error);
+    throw error;
+  }
+}
+
