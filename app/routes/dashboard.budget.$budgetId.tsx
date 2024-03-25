@@ -5,6 +5,7 @@ import {
   getUserBudgets,
   createExpense,
   updateCategoryAmount,
+  getAllExpenses,
 } from "~/models/budget.server";
 import { requireUserId } from "~/session.server";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -14,9 +15,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { prisma } from "~/db.server";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import React from "react";
 import ExpenseDetailsCard from "../components/ExpensesCard";
@@ -79,7 +78,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   if (!filteredBudget) {
     throw new Response("No budget Found", { status: 404 });
   }
-  return json({ filteredBudget });
+
+  const allExpenses = await getAllExpenses()
+
+  return json({ filteredBudget, allExpenses });
 };
 
 export default function BudgetsDashboard() {
@@ -130,7 +132,7 @@ export default function BudgetsDashboard() {
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} />
+                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} allExpenses={data.allExpenses} />
                 </Grid>
               </Grid>
             </Box>

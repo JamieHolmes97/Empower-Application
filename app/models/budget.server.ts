@@ -147,3 +147,7 @@ export async function updateCategoryAmount(categoryId: Category["id"], newAmount
   });
 }
 
+export async function getAllExpenses(): Promise<Expense[]> {
+  return prisma.expense.findMany();
+}
+
