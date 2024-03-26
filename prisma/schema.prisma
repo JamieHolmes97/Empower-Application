@@ -79,7 +79,7 @@ model Expense {
 model Message {
   id         String   @id @default(cuid())
   name       String
-  university String
+  university String   @default("N/A")
   message    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
