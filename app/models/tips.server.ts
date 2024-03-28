@@ -26,3 +26,17 @@ export function createTip({
   export async function getAllTips(): Promise<Message[]> {
     return prisma.message.findMany();
   }
+
+  export async function getTipsByUserId(userId: string): Promise<Message[]> {
+    try {
+      const messages = await prisma.message.findMany({
+        where: {
+          userId: userId
+        }
+      });
+      return messages;
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      throw error;
+    }
+  }

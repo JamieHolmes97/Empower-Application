@@ -1,7 +1,23 @@
-import { Link } from "@remix-run/react";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import NavBar from "~/components/NavBar";
+import { requireUserId } from "~/session.server";
+import { getAllTips, getTipsByUserId } from "~/models/tips.server";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const userId = await requireUserId(request);
+
+  const allTips = await getAllTips()
+  const userTips = await getTipsByUserId(userId)
+
+  return {allTips, userTips}
+}
 
 export default function CommunityTips() {
+
+  const tipsData = useLoaderData<typeof loader>();
+  console.log(tipsData)
+  
   return (
     <div className="min-h-full">
       <NavBar />
@@ -12,6 +28,9 @@ export default function CommunityTips() {
           </h1>
         </div>
       </header>
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1>Here you will view and share Tips from other students! </h1>
+      </div>
 
       <Link
         to="/communitytips/addtip"
