@@ -3,6 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import NavBar from "~/components/NavBar";
 import { requireUserId } from "~/session.server";
 import { getAllTips, getTipsByUserId } from "~/models/tips.server";
+import TipsDetailsCard from "../components/TipsDetailsCard"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -38,6 +39,10 @@ export default function CommunityTips() {
       >
         Add Community Tip
       </Link>
+
+      <TipsDetailsCard tipsData={null} userTipsData={null} /> 
+
+      
     </div>
   );
 }
