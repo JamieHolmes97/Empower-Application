@@ -40,3 +40,17 @@ export function createTip({
       throw error;
     }
   }
+
+  export async function deleteMessage(messageId: string): Promise<void> {
+    try {
+      await prisma.message.delete({
+        where: {
+          id: messageId
+        }
+      });
+      console.log('Message deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      throw error;
+    }
+  }

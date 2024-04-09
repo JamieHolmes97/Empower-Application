@@ -11,14 +11,14 @@ import {
     let budgetId
   
     beforeAll(async () => {
-      const email = "test@example.com";
+      const email = "testing@example.com";
       const password = "password123";
       const user = await createUser(email, password);
       userId = user.id;
     });
   
     afterAll(async () => {
-      await deleteUserByEmail("test@example.com");
+      await deleteUserByEmail("testing@example.com");
     });
   
     it("should create a new budget with categories", async () => {

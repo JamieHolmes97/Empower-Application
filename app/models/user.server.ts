@@ -47,6 +47,7 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
           expenses: true,
         },
       },
+      messages: true,
     },
   });
 
@@ -89,6 +90,12 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
     });
   }
 
+  await prisma.message.deleteMany({
+    where: {
+      userId: user.id,
+    }
+  })
+
   // Delete the user
   await prisma.user.delete({
     where: {
@@ -126,3 +133,5 @@ export async function verifyLogin(
 
   return userWithoutPassword;
 }
+
+
