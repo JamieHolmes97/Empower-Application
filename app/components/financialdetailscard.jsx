@@ -13,20 +13,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import SavingsIcon from "@mui/icons-material/Savings";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import { darkTheme, Item } from "../mui.utils"
 
 const FinancialDetailsCard = ({ financialData }) => {
   const navigate = useNavigate();

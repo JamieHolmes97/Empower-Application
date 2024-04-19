@@ -1,38 +1,19 @@
-import Paper from "@mui/material/Paper";
-import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { Box, Card, CardContent, Divider, Grid, Typography, Button } from "@mui/material";
+import { darkTheme, Item } from "../mui.utils"
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "left",
-  color: theme.palette.text.secondary,
-}));
 
 const TipsDetailsCard = ({ tipsData, userTipsData }) => {
   const [showAllTips, setShowAllTips] = useState(false);
   const [showAllUserTips, setShowAllUserTips] = useState(false);
 
-  // Define the number of tips to display initially
   const initialTipsCount = 8;
   const initialUserTipsCount = 4;
 
-  // Calculate the number of rows to display initially
-  const initialRowCount = Math.ceil(initialTipsCount / 4);
-
-  // Slice the array to display only the first 4/5 rows initially
   const displayedTips = showAllTips ? tipsData : tipsData.slice(0, initialTipsCount);
   const displayedUserTips = showAllTips ? userTipsData : userTipsData.slice(0, initialUserTipsCount);
 
-  // Function to handle button click to toggle between showing all tips and showing only the first 4/5 rows
   const handleToggleTips = () => {
     setShowAllTips(!showAllTips);
   };
