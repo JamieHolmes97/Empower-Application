@@ -52,14 +52,14 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
   const category = await prisma.category.findUnique({
     where: { id: categoryId },
-    select: { amount: true },
+    select: { amount: true, amountUpdated: true },
   });
 
   if (!category) {
     throw new Error(`Category with id ${categoryId} not found`);
   }
 
-  const currentAmount = category.amount;
+  const currentAmount = category.amountUpdated;
   const updatedAmount = currentAmount - amount;
   await updateCategoryAmount(categoryId, updatedAmount);
 

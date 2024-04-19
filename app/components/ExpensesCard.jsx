@@ -56,7 +56,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
     const expensesWithCategory = allExpenses.filter((expense) => getCategoryName(expense.categoryId) === categoryName);
     const totalAmount = expensesWithCategory.reduce((total, expense) => total + expense.amount, 0);
     const averageAmount = expensesWithCategory.length > 0 ? totalAmount / expensesWithCategory.length : 0;
-    return averageAmount;
+    return Math.round(averageAmount);
   }
 
   function getExpenseTextColor(categoryName, expenseAmount) {
@@ -80,6 +80,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
               <StyledTableCell>Expense Name/Description</StyledTableCell>
               <StyledTableCell align="right">Amount&nbsp;(£) </StyledTableCell>
               <StyledTableCell align="right">Budget Category</StyledTableCell>
+              <StyledTableCell align="right">Category Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Community Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Updated At</StyledTableCell>
             </TableRow>
@@ -94,6 +95,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
                   <StyledTableCell align="right">{row.budgetCategory}</StyledTableCell>
+                  <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
                   <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
                   <StyledTableCell align="right">{row.updatedAt}</StyledTableCell>
                 </StyledTableRow>

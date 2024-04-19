@@ -9,7 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "@remix-run/react";
 import { deleteBudgetById } from "../models/budget.server";
-import { darkTheme, Item } from "../mui.utils"
+import { darkTheme, Item } from "../mui.utils";
 
 const handleDelete = async (budgetID) => {
   console.log(budgetID);
@@ -32,54 +32,41 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {budgetItem.name} Budget Details
                       </Typography>
-                      <Typography
-                        sx={{ fontSize: 14 }}
-                        color="text.secondary"
-                        gutterBottom
-                      >
+                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         Budget Duration: {budgetItem.duration} Days Remaining
                       </Typography>
                     </Box>
 
                     <Box sx={{ flexGrow: 1 }}>
                       <Grid container spacing={2}>
-                        {budgetItem.categories.map(
-                          (category, categoryIndex) => (
-                            <Grid item xs={3} key={categoryIndex}>
-                              <div className="mb-4">
-                                <Item>
-                                  <Typography
-                                    variant="subtitle1"
-                                    component="div"
-                                  >
-                                    {category.name}:
-                                  </Typography>
-                                </Item>
-                              </div>
+                        {budgetItem.categories.map((category, categoryIndex) => (
+                          <Grid item xs={3} key={categoryIndex}>
+                            <div className="mb-4">
                               <Item>
-                                <div className="relative">
-                                  <Typography variant="h2" component="div">
-                                    £{category.amountUpdated}
-                                  </Typography>
-                                  <Typography
-                                    variant="subtitle2"
-                                    component="div"
-                                    className="absolute top-0 left-0 text-sm text-gray-500"
-                                  >
-                                    £{category.amount}
-                                  </Typography>
-                                </div>
+                                <Typography variant="subtitle1" component="div">
+                                  {category.name}:
+                                </Typography>
                               </Item>
-                            </Grid>
-                          ),
-                        )}
+                            </div>
+                            <Item>
+                              <div className="relative">
+                                <Typography
+                                  variant="subtitle2"
+                                  component="div"
+                                  className="absolute top-0 right-0 text-sm text-gray-500"
+                                >
+                                  £{category.amount}
+                                </Typography>
+                                <Typography variant="h2" component="div">
+                                  £{category.amountUpdated}
+                                </Typography>
+                              </div>
+                            </Item>
+                          </Grid>
+                        ))}
                       </Grid>
                     </Box>
                   </CardContent>
@@ -103,10 +90,7 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                         )}
                       </Grid>
                       <Grid item>
-                        <Button
-                          size="small"
-                          onClick={() => handleDelete(budgetItem.id)}
-                        >
+                        <Button size="small" onClick={() => handleDelete(budgetItem.id)}>
                           Delete Budget
                         </Button>
                       </Grid>
@@ -134,8 +118,7 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                     <Typography variant="h6">
                       It appears you have not yet added any budgets.
                       <br />
-                      Please click the icon above to add your own personalised
-                      budget.
+                      Please click the icon above to add your own personalised budget.
                     </Typography>
                   </Item>
                 </CardContent>
