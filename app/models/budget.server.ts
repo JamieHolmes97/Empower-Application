@@ -100,6 +100,15 @@ export function getUserBudgets({ userId }: { userId: User["id"] }) {
     .then((user) => user?.budgets || []);
 }
 
+export function getAllBudgets() {
+  return prisma.budget.findMany({
+    include: {
+      categories: true,
+      expenses: true,
+    },
+  });
+}
+
 export async function getCategoriesByBudgetId(budgetId: string): Promise<Category[]> {
   const categories = await prisma.category.findMany({
     where: {

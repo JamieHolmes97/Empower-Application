@@ -6,6 +6,7 @@ import {
   createExpense,
   updateCategoryAmount,
   getAllExpenses,
+  getAllBudgets,
 } from "~/models/budget.server";
 import { requireUserId } from "~/session.server";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -70,6 +71,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
   invariant(params.budgetId, "budgetId not found");
 
+  const allBudgets = await getAllBudgets()
+
   const budget = await getUserBudgets({
     userId,
   });
@@ -81,7 +84,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const allExpenses = await getAllExpenses()
 
-  return json({ filteredBudget, allExpenses });
+  return json({ filteredBudget, allExpenses, allBudgets });
 };
 
 export default function BudgetsDashboard() {
@@ -132,7 +135,7 @@ export default function BudgetsDashboard() {
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} allExpenses={data.allExpenses} />
+                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} allExpenses={data.allExpenses} allBudgets={data.allBudgets} />
                 </Grid>
               </Grid>
             </Box>

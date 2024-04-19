@@ -44,13 +44,18 @@ function formatDate(dateString) {
   return `${day}/${month}/${year}, ${hours}:${minutes}`;
 }
 
-const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
+const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
   console.log(expenseData);
 
   function getCategoryName(categoryId) {
-    const category = expenseData.categories.find((cat) => cat.id === categoryId);
-    return category ? category.name : "Category Not Found";
-  }
+    for (const expenseItem of allBudgets) {
+        const category = expenseItem.categories.find((cat) => cat.id === categoryId);
+        if (category) {
+            return category.name;
+        }
+    }
+    return "Category Not Found";
+}
 
   function getAverageForExpense(categoryName) {
     const expensesWithCategory = allExpenses.filter((expense) => getCategoryName(expense.categoryId) === categoryName);
@@ -58,6 +63,17 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
     const averageAmount = expensesWithCategory.length > 0 ? totalAmount / expensesWithCategory.length : 0;
     return Math.round(averageAmount);
   }
+
+  function transformData(allExpenses) {
+    const transformedArray = allExpenses.map(expense => {
+        return {
+            description: expense.description,
+            amount: expense.amount,
+            categoryName: getCategoryName(expense.categoryId)
+        };
+    });
+    return transformedArray;
+}
 
   function getExpenseTextColor(categoryName, expenseAmount) {
     const averageAmount = getAverageForExpense(categoryName);
@@ -83,6 +99,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses }) => {
               <StyledTableCell align="right">Category Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Community Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Updated At</StyledTableCell>
+              {console.log(transformData(allExpenses))}
             </TableRow>
           </TableHead>
 
