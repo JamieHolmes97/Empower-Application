@@ -192,4 +192,17 @@ export async function deleteExpenseById(expenseId: Expense["id"]) {
   });
 }
 
+export async function findExpenseById(expenseId: string) {
+  const expense = await prisma.expense.findUnique({
+    where: { id: expenseId },
+  });
+
+  if (!expense) {
+    throw new Error(`Expense with id ${expenseId} not found`);
+  }
+
+  return expense;
+}
+
+
 

@@ -1,15 +1,31 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { deleteExpenseById } from "~/models/budget.server";
+import { deleteExpenseById, updateCategoryAmount, findExpenseById } from "~/models/budget.server";
 import { Form } from "@remix-run/react";
 import NavBar from "~/components/NavBar";
+import { prisma } from "~/db.server";
   
 export const action = async ({ params }: ActionFunctionArgs) => {
 
-   
-  const deletedExpense = await deleteExpenseById(params.expenseId as string);
+  const expenseDetails = await findExpenseById(params.expenseId as string)
+  const expenseAmount = expenseDetails.amount
 
+  const category = await prisma.category.findUnique({
+    where: { id: expenseDetails.categoryId },
+    select: { amount: true, amountUpdated: true },
+  });
+
+  if (!category) {
+    throw new Error(`Category with id ${expenseDetails.categoryId} not found`);
+  }
+
+  const updatedAmount = category.amountUpdated + expenseAmount
+
+  const updatedExpense = await updateCategoryAmount(expenseDetails.categoryId, updatedAmount)
+  const deletedExpense = await deleteExpenseById(params.expenseId as string);
+  
   return redirect('/dashboard');
 };
+
 
 export default function DeleteExpense() {
   
