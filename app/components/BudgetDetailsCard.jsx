@@ -2,21 +2,15 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { ThemeProvider } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "@remix-run/react";
-import { deleteBudgetById } from "../models/budget.server";
 import { darkTheme, Item } from "../mui.utils";
 
-const handleDelete = async (budgetID) => {
-  console.log(budgetID);
-  await deleteBudgetById(budgetID);
-};
-
 const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
+
   return (
     <>
       {budgetData.length > 0 ? (
@@ -88,11 +82,6 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                             Dashboard
                           </Link>
                         )}
-                      </Grid>
-                      <Grid item>
-                        <Button size="small" onClick={() => handleDelete(budgetItem.id)}>
-                          Delete Budget
-                        </Button>
                       </Grid>
                     </Grid>
                   </CardActions>

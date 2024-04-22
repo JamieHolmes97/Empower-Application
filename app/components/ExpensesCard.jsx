@@ -45,7 +45,6 @@ function formatDate(dateString) {
 }
 
 const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
-  console.log(expenseData);
 
   function getCategoryName(categoryId) {
     for (const expenseItem of allBudgets) {
@@ -99,7 +98,6 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
               <StyledTableCell align="right">Category Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Community Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Updated At</StyledTableCell>
-              {console.log(transformData(allExpenses))}
             </TableRow>
           </TableHead>
 

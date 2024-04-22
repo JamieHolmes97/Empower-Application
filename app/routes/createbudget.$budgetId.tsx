@@ -44,8 +44,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 
 export default function CreateBudgetCategory() {
   const data = useLoaderData<typeof loader>();
-  console.log(data);
-
+  
   return (
     <div className="min-h-full bg-gray-100">
       <NavBar />

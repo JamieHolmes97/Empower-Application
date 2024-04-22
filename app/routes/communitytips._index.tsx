@@ -17,7 +17,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function CommunityTips() {
   const tipsData = useLoaderData<typeof loader>();
-  console.log(tipsData);
 
   return (
     <div className="min-h-full">

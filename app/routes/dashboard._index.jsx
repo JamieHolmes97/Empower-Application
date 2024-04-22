@@ -18,7 +18,7 @@ export async function loader({ request }) {
 
 export default function Dashboard() {
   const data = useLoaderData();
-  console.log({ data });
+
   return (
     <>
       <div className="min-h-full">
