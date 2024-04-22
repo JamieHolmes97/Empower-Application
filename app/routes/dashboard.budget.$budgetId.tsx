@@ -291,7 +291,7 @@ export default function BudgetsDashboard() {
                 Are you sure you want to DELETE your Budget?
               </h2>
               <h3 className="text-1xl mb-6">
-                Once you delete your budget there's no going back... you can as always created another one!
+                Once you delete your budget there's no going back... you can as always create another one!
               </h3>
               <Form method="post" className="space-y-6">
                  

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,6 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Link } from "@remix-run/react";
+
 
 const darkTheme = createTheme({
   palette: {
@@ -45,16 +47,15 @@ function formatDate(dateString) {
 }
 
 const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
-
   function getCategoryName(categoryId) {
     for (const expenseItem of allBudgets) {
-        const category = expenseItem.categories.find((cat) => cat.id === categoryId);
-        if (category) {
-            return category.name;
-        }
+      const category = expenseItem.categories.find((cat) => cat.id === categoryId);
+      if (category) {
+        return category.name;
+      }
     }
     return "Category Not Found";
-}
+  }
 
   function getAverageForExpense(categoryName) {
     const expensesWithCategory = allExpenses.filter((expense) => getCategoryName(expense.categoryId) === categoryName);
@@ -62,17 +63,6 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
     const averageAmount = expensesWithCategory.length > 0 ? totalAmount / expensesWithCategory.length : 0;
     return Math.round(averageAmount);
   }
-
-  function transformData(allExpenses) {
-    const transformedArray = allExpenses.map(expense => {
-        return {
-            description: expense.description,
-            amount: expense.amount,
-            categoryName: getCategoryName(expense.categoryId)
-        };
-    });
-    return transformedArray;
-}
 
   function getExpenseTextColor(categoryName, expenseAmount) {
     const averageAmount = getAverageForExpense(categoryName);
@@ -84,6 +74,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
     amount: expense.amount,
     budgetCategory: getCategoryName(expense.categoryId),
     updatedAt: formatDate(expense.updatedAt),
+    expenseId: expense.id,
   }));
 
   return (
@@ -98,6 +89,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
               <StyledTableCell align="right">Category Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Community Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Updated At</StyledTableCell>
+              <StyledTableCell align="right"></StyledTableCell>
             </TableRow>
           </TableHead>
 
@@ -113,6 +105,11 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
                   <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
                   <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
                   <StyledTableCell align="right">{row.updatedAt}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Link to={`/deleteexpense/${row.expenseId}`}>
+                      <DeleteForeverIcon />
+                    </Link>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
