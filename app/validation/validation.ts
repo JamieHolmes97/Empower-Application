@@ -27,3 +27,17 @@ export const communityTipValidator = withZod(
   })
 );
 
+export const createBudgetValidator = withZod(
+  z.object({
+    budgetName: z.string()
+    .min(1, { message: "Budget name is required." })
+    .max(30, { message: "Budget name cannot exceed 30 characters"}),
+    amount: z.preprocess((value) => {
+      return value ? parseFloat(value.toString()) : 0
+    }, z.number().min(1, "Budget amount must be a positive number")),
+    duration: z.preprocess((value) => {
+      return value ? parseFloat(value.toString()) : 0
+    }, z.number().min(0, "Budget duration must be a positive number")),
+  })
+);
+
