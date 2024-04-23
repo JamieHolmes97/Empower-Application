@@ -1,4 +1,3 @@
-//import { prisma } from "~/db.server";
 import { prisma } from "../db.server";
 import { Budget, Expense, Category, User } from "@prisma/client";
 

@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from 'react';
 
-// Lazy load the PieChart component
 const PieChartLazy = lazy(() => import('@mui/x-charts/PieChart').then(module => ({ default: module.PieChart })));
 
 export default function TestingPie() {

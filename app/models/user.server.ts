@@ -34,7 +34,7 @@ export async function deleteUserByEmail(email: User["email"]) {
 }
 
 export async function deleteUserByEmailAllData(email: string): Promise<void> {
-  // Retrieve the user by email along with associated financial details and budgets
+
   const user = await prisma.user.findUnique({
     where: {
       email,
@@ -55,7 +55,6 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
     throw new Error('User not found');
   }
 
-  // Delete financial details
   if (user.financialDetails) {
     await prisma.financialDetails.delete({
       where: {
@@ -64,10 +63,8 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
     });
   }
 
-  // Delete budgets, categories, and expenses
   for (const budget of user.budgets) {
     for (const category of budget.categories) {
-      // Delete expenses associated with the category
       await prisma.expense.deleteMany({
         where: {
           categoryId: category.id,
@@ -75,14 +72,12 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
       });
     }
 
-    // Delete categories
     await prisma.category.deleteMany({
       where: {
         budgetId: budget.id,
       },
     });
 
-    // Delete budget
     await prisma.budget.delete({
       where: {
         id: budget.id,
@@ -96,7 +91,6 @@ export async function deleteUserByEmailAllData(email: string): Promise<void> {
     }
   })
 
-  // Delete the user
   await prisma.user.delete({
     where: {
       id: user.id,
