@@ -1,13 +1,11 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import NavBar from "../components/NavBar";
+import { ActionFunctionArgs, redirect, ActionFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { editFinancialDetails } from "~/models/financial.server";
+import NavBar from "../components/NavBar";
+import { editFinancialDetails, getFinancialDetails } from "~/models/financial.server";
 import { requireUserId } from "~/session.server";
-import { ActionFunction } from "@remix-run/node";
-import { getFinancialDetails } from "~/models/financial.server";
-import { handleInputNumber } from "~/utils";
+import { financialDetailsValidator } from "~/validation/validation";
+import FormInput from "~/components/FormInput";
+import { ValidatedForm } from "remix-validated-form";
 
 export const loader: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request);
@@ -45,81 +43,15 @@ export default function EditFinancialData() {
       <NavBar />
       <div className="min-h-screen flex flex-col justify-center items-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h2 className="text-2xl font-semibold mb-6">
-            Update your financial details
-          </h2>
-          <Form method="post" className="space-y-6">
-            <div>
-              <label
-                htmlFor="balance"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Overall Balance
-              </label>
-              <div className="mt-1">
-                <input
-                  id="balance"
-                  required
-                  defaultValue={data.balance}
-                  autoFocus={true}
-                  name="balance"
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                  type="number"
-                  onInput={handleInputNumber}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="income"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Monthly Income
-              </label>
-              <div className="mt-1">
-                <input
-                  id="income"
-                  required
-                  defaultValue={data.income}
-                  autoFocus={true}
-                  name="income"
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                  type="number"
-                  onInput={handleInputNumber}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="savings"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Current Savings
-              </label>
-              <div className="mt-1">
-                <input
-                  id="savings"
-                  required
-                  defaultValue={data.savings}
-                  autoFocus={true}
-                  name="savings"
-                  className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-                  type="number"
-                  onInput={handleInputNumber}
-                />
-              </div>
-            </div>
-
-            <input type="hidden" name="redirectTo" />
-            <button
-              type="submit"
-              className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-            >
+          <h2 className="text-2xl font-semibold mb-6">Update your financial details</h2>
+          <ValidatedForm validator={financialDetailsValidator} method="post" className="space-y-6">
+            <FormInput name="balance" label="Overall Balance" type="number" defaultValue={data.balance} autoFocus />
+            <FormInput name="income" label="Monthly Income" type="number" defaultValue={data.income} />
+            <FormInput name="savings" label="Current Savings" type="number" defaultValue={data.savings} />
+            <button type="submit" className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400">
               Submit
             </button>
-          </Form>
+          </ValidatedForm>
         </div>
       </div>
     </div>
