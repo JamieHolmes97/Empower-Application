@@ -21,7 +21,7 @@ import { Button } from "@mui/material";
 import { prisma } from "~/db.server";
 import Modal from "@mui/material/Modal";
 import Tooltip from '@mui/material/Tooltip';
-import React from "react";
+import React, { useState } from "react";
 import ExpenseDetailsCard from "../components/ExpensesCard";
 import VisualDataCard from "../components/VisualDataCard"
 import { redirect } from "@remix-run/node";
@@ -92,6 +92,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export default function BudgetsDashboard() {
+
+  const [rowsData, setRowsData]= useState()
   
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -101,7 +103,6 @@ export default function BudgetsDashboard() {
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
   
-
   const data = useLoaderData<typeof loader>();
   
   return (
@@ -115,12 +116,17 @@ export default function BudgetsDashboard() {
             </h1>
             <Tooltip title="Delete Budget" placement="bottom">
             <Button onClick={handleOpenDelete}>
-              <DeleteForeverIcon />
+              Delete Budget? <DeleteForeverIcon /> 
+            </Button>
+            </Tooltip>
+            <Tooltip title="Add Expense" placement="bottom">
+            <Button onClick={handleOpen}>
+              Add Expense? <AddCircleOutlineIcon />
             </Button>
             </Tooltip>
           </div>
         </header>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
           <div>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
@@ -135,7 +141,7 @@ export default function BudgetsDashboard() {
           </div>
           <div>{data ? null : <p>No financial details available.</p>}</div>
         </div>
-        <header className="bg-white shadow">
+        {/* <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 pr-2">
               Expenses
@@ -146,31 +152,31 @@ export default function BudgetsDashboard() {
             </Button>
             </Tooltip>
           </div>
-        </header>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        </header> */}
+        <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
           <div>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} allExpenses={data.allExpenses} allBudgets={data.allBudgets} />
+                  <ExpenseDetailsCard expenseData={data.filteredBudget[0]} allExpenses={data.allExpenses} allBudgets={data.allBudgets} setRowsData={setRowsData} />
                 </Grid>
               </Grid>
             </Box>
           </div>
           <div>{data ? null : <p>No financial details available.</p>}</div>
         </div>
-        <header className="bg-white shadow">
+        {/* <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 pr-2">
               Visual Data
             </h2>
           </div>
-        </header>
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+        </header> */}
+        <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <VisualDataCard filteredBudget={data.filteredBudget[0]} option={null} />
+                  <VisualDataCard filteredBudget={data.filteredBudget[0]} averageData={rowsData} />
                 </Grid>
               </Grid>
             </Box>

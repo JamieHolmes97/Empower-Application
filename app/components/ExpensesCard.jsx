@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "@remix-run/react";
-
+import { useEffect } from "react";
 
 const darkTheme = createTheme({
   palette: {
@@ -46,36 +46,46 @@ function formatDate(dateString) {
   return `${day}/${month}/${year}, ${hours}:${minutes}`;
 }
 
-const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
-  function getCategoryName(categoryId) {
-    for (const expenseItem of allBudgets) {
-      const category = expenseItem.categories.find((cat) => cat.id === categoryId);
-      if (category) {
-        return category.name;
+const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets, setRowsData }) => {
+
+
+  function getCategoryName(categoryId, userAverage) {
+    if (userAverage == true) {
+      const category = expenseData.categories.find((cat) => cat.id === categoryId);
+      return category ? category.name : "Category Not Found";
+    } else {
+      for (const expenseItem of allBudgets) {
+        const category = expenseItem.categories.find((cat) => cat.id === categoryId);
+        if (category) {
+          return category.name;
+        }
       }
     }
     return "Category Not Found";
   }
 
-  function getAverageForExpense(categoryName) {
-    const expensesWithCategory = allExpenses.filter((expense) => getCategoryName(expense.categoryId) === categoryName);
+  function getAverageForExpense(categoryName, userAverage) {
+    const expensesWithCategory = allExpenses.filter(
+      (expense) => getCategoryName(expense.categoryId, userAverage) === categoryName,
+    );
     const totalAmount = expensesWithCategory.reduce((total, expense) => total + expense.amount, 0);
     const averageAmount = expensesWithCategory.length > 0 ? totalAmount / expensesWithCategory.length : 0;
     return Math.round(averageAmount);
-  }
-
-  function getExpenseTextColor(categoryName, expenseAmount) {
-    const averageAmount = getAverageForExpense(categoryName);
-    return expenseAmount <= averageAmount ? "text-green-500" : "text-red-500";
   }
 
   const rows = expenseData.expenses.map((expense) => ({
     name: expense.description,
     amount: expense.amount,
     budgetCategory: getCategoryName(expense.categoryId),
+    budgetAverage: getAverageForExpense( getCategoryName(expense.categoryId), true),
+    communityAverage: getAverageForExpense( getCategoryName(expense.categoryId), false),
     updatedAt: formatDate(expense.updatedAt),
     expenseId: expense.id,
   }));
+
+  useEffect(() => {
+    setRowsData(rows)
+  }, [expenseData, setRowsData]);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -86,7 +96,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
               <StyledTableCell>Expense Name/Description</StyledTableCell>
               <StyledTableCell align="right">Amount&nbsp;(£) </StyledTableCell>
               <StyledTableCell align="right">Budget Category</StyledTableCell>
-              <StyledTableCell align="right">Category Average &nbsp;(£)</StyledTableCell>
+              <StyledTableCell align="right">Your Budget Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Community Average &nbsp;(£)</StyledTableCell>
               <StyledTableCell align="right">Updated At</StyledTableCell>
               <StyledTableCell align="right"></StyledTableCell>
@@ -102,8 +112,8 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets }) => {
                   </StyledTableCell>
                   <StyledTableCell align="right">{row.amount}</StyledTableCell>
                   <StyledTableCell align="right">{row.budgetCategory}</StyledTableCell>
-                  <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
-                  <StyledTableCell align="right">{getAverageForExpense(row.budgetCategory)}</StyledTableCell>
+                  <StyledTableCell align="right">{row.budgetAverage}</StyledTableCell>
+                  <StyledTableCell align="right">{row.communityAverage}</StyledTableCell>
                   <StyledTableCell align="right">{row.updatedAt}</StyledTableCell>
                   <StyledTableCell align="right">
                     <Link to={`/deleteexpense/${row.expenseId}`}>
