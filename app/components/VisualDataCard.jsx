@@ -7,35 +7,45 @@ import Grid from "@mui/material/Grid";
 import PaidIcon from "@mui/icons-material/Paid";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import { darkTheme, Item } from "../mui.utils";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useMemo } from "react";
 
 const VisualDataCard = ({ filteredBudget, averageData }) => {
   const PieChart = lazy(() => import("@mui/x-charts/PieChart").then((module) => ({ default: module.PieChart })));
   const BarChart = lazy(() => import("@mui/x-charts/BarChart").then((module) => ({ default: module.BarChart })));
 
-  // const uData = averageData.map((item) => item.communityAverage);
-  // const pData = averageData.map((item) => item.budgetAverage);
-  // const xLabels = averageData.map((item) => item.budgetCategory.trim());
+  const { uData, pData, xLabels } = useMemo(() => {
+    if (!averageData || averageData.length === 0) {
+      return { uData: [], pData: [], xLabels: [] };
+    }
+    return {
+      uData: averageData.map((item) => item.communityAverage),
+      pData: averageData.map((item) => item.budgetAverage),
+      xLabels: averageData.map((item) => item.budgetCategory.trim()),
+    };
+  }, [averageData]);
 
-  console.log(averageData)
+  const { originalBudgetData, updatedBudgetData } = useMemo(() => {
+    if (!filteredBudget || !filteredBudget.categories || filteredBudget.categories.length === 0) {
+      return { originalBudgetData: [], updatedBudgetData: [] };
+    }
+    const visualizationData = filteredBudget.categories.map((category) => ({
+      name: category.name,
+      originalAmount: category.amount,
+      updatedAmount: category.amountUpdated,
+    }));
+    return {
+      originalBudgetData: visualizationData.map((cat) => ({
+        label: cat.name,
+        value: cat.originalAmount,
+      })),
+      updatedBudgetData: visualizationData.map((cat) => ({
+        label: cat.name + '(Spent)',
+        value: cat.updatedAmount,
+      })),
+    };
+  }, [filteredBudget]);
 
-  const visualizationData = filteredBudget.categories.map((category) => ({
-    name: category.name,
-    originalAmount: category.amount,
-    updatedAmount: category.amountUpdated,
-  }));
-
-  const originalBudgetData = visualizationData.map((cat) => ({
-    label: cat.name,
-    value: cat.originalAmount,
-  }));
-
-  const updatedBudgetData = visualizationData.map((cat) => ({
-    label: cat.name,
-    value: cat.updatedAmount,
-  }));
-
-  console.log(averageData)
+  console.log(averageData);
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -49,12 +59,12 @@ const VisualDataCard = ({ filteredBudget, averageData }) => {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Item>
-                    <PaidIcon /> Original Budget:
+                    <PaidIcon /> Budget Summary: Total Budget&nbsp;(Inner) / Total Spend&nbsp;(Outter)
                   </Item>
                 </Grid>
                 <Grid item xs={6}>
                   <Item>
-                    <AddCardIcon /> Remaining Budget:
+                    <AddCardIcon /> Your Budget Average vs Community Average
                   </Item>
                 </Grid>
                 <Grid item xs={6}>
@@ -74,14 +84,13 @@ const VisualDataCard = ({ filteredBudget, averageData }) => {
                               data: updatedBudgetData,
                             },
                           ]}
-                          width={400}
+                          width={500}
                           height={300}
                           slotProps={{
-                            legend: { hidden: true },
-                          }}
+                            legend: { padding: -10 }
+                        }}
                         />
                       </Suspense>
-                      <h1>Jamie Is testing Pie charts</h1>
                     </div>
                   </Item>
                 </Grid>
@@ -89,17 +98,16 @@ const VisualDataCard = ({ filteredBudget, averageData }) => {
                   <Item>
                     <div>
                       <Suspense fallback={<div>Loading Chart...</div>}>
-                        {/* <BarChart
-                          width={500}
+                        <BarChart
+                          width={600}
                           height={300}
                           series={[
                             { data: pData, label: "Budget Average", id: "pvId" },
                             { data: uData, label: "Community Average", id: "uvId" },
                           ]}
                           xAxis={[{ data: xLabels, scaleType: "band" }]}
-                        /> */}
+                        />
                       </Suspense>
-                      <h1>Jamie Is testing Bar charts</h1>
                     </div>
                   </Item>
                 </Grid>
