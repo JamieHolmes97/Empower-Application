@@ -23,19 +23,8 @@ import Modal from "@mui/material/Modal";
 import Tooltip from '@mui/material/Tooltip';
 import React from "react";
 import ExpenseDetailsCard from "../components/ExpensesCard";
+import VisualDataCard from "../components/VisualDataCard"
 import { redirect } from "@remix-run/node";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -169,6 +158,22 @@ export default function BudgetsDashboard() {
             </Box>
           </div>
           <div>{data ? null : <p>No financial details available.</p>}</div>
+        </div>
+        <header className="bg-white shadow">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 pr-2">
+              Visual Data
+            </h2>
+          </div>
+        </header>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <VisualDataCard filteredBudget={data.filteredBudget[0]} option={null} />
+                </Grid>
+              </Grid>
+            </Box>
         </div>
         <Modal
           open={open}
