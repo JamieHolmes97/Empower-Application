@@ -9,6 +9,8 @@ import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { Link } from "@remix-run/react";
 import { useEffect } from "react";
+import { formatDate } from "~/utils";
+import { useLocation } from "@remix-run/react";
 
 const darkTheme = createTheme({
   palette: {
@@ -36,17 +38,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${day}/${month}/${year}, ${hours}:${minutes}`;
-}
+
 
 const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets, setRowsData }) => {
+
+  const location = useLocation();
+  const pathname = location.pathname
+
 
 
   function getCategoryName(categoryId, userAverage) {
@@ -116,7 +114,7 @@ const ExpenseDetailsCard = ({ expenseData, allExpenses, allBudgets, setRowsData 
                   <StyledTableCell align="right">{row.communityAverage}</StyledTableCell>
                   <StyledTableCell align="right">{row.updatedAt}</StyledTableCell>
                   <StyledTableCell align="right">
-                    <Link to={`/deleteexpense/${row.expenseId}`}>
+                    <Link to={`/deleteexpense/${row.expenseId}?${pathname}`}>
                       <DeleteForeverIcon />
                     </Link>
                   </StyledTableCell>

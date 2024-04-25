@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import FinancialDetailsCard from "../components/FinancialDetailsCard";
+import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 import BudgetDetailsCard from "../components/BudgetDetailsCard";
 import { getUserBudgets } from "~/models/budget.server";
