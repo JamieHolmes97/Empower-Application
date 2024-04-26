@@ -142,6 +142,16 @@ export default function BudgetsDashboard() {
             </Tooltip>
           </div>
         </header> */}
+
+        <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <VisualDataCard filteredBudget={data.filteredBudget[0]} averageData={rowsData} />
+              </Grid>
+            </Grid>
+          </Box>
+        </div>
         <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
           <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -166,15 +176,6 @@ export default function BudgetsDashboard() {
             </h2>
           </div>
         </header> */}
-        <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <VisualDataCard filteredBudget={data.filteredBudget[0]} averageData={rowsData} />
-              </Grid>
-            </Grid>
-          </Box>
-        </div>
         <Modal
           open={open}
           onClose={handleClose}
