@@ -14,79 +14,60 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
     <>
       {budgetData.length > 0 ? (
         budgetData.map((budgetItem) => (
-          <div key={budgetItem.id} className="mb-4">
-            <ThemeProvider theme={darkTheme}>
-              <Box sx={{ minWidth: 275 }}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        {budgetItem.name} Budget Details
-                      </Typography>
-                      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Budget Duration: {budgetItem.duration} Days Remaining
-                      </Typography>
-                    </Box>
+          <div key={budgetItem.id} className="mt-2">
+            <Link className="hover:bg-blue-600 focus:bg-blue-400" to={`budget/${budgetItem.id}`}>
+              <ThemeProvider theme={darkTheme}>
+                <Box sx={{ minWidth: 275 }}>
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                          {budgetItem.name} Budget Details
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                          Budget Duration: {budgetItem.duration} Days Remaining
+                        </Typography>
+                      </Box>
 
-                    <Box sx={{ flexGrow: 1 }}>
-                      <Grid container spacing={2}>
-                        {budgetItem.categories.map((category, categoryIndex) => (
-                          <Grid item xs={3} key={categoryIndex}>
-                            <div className="mb-4">
-                              <Item>
-                                <Typography variant="subtitle1" component="div">
-                                  {category.name}:
-                                </Typography>
-                              </Item>
-                            </div>
-                            <Item>
-                              <div className="relative">
-                                <Typography
-                                  variant="subtitle2"
-                                  component="div"
-                                  className="absolute top-0 right-0 text-sm text-gray-500"
-                                >
-                                  £{category.amount}
-                                </Typography>
-                                <Typography variant="h2" component="div">
-                                  £{category.amountUpdated}
-                                </Typography>
+                      <Box sx={{ flexGrow: 1 }}>
+                        <Grid container spacing={2}>
+                          {budgetItem.categories.map((category, categoryIndex) => (
+                            <Grid item xs={3} key={categoryIndex}>
+                              <div className="mb-4">
+                                <Item>
+                                  <Typography variant="subtitle1" component="div">
+                                    {category.name}:
+                                  </Typography>
+                                </Item>
                               </div>
-                            </Item>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
-                  </CardContent>
-                  <CardActions>
-                    <Grid container justifyContent="space-between">
-                      <Grid item>
-                        {viewMoreDetails ? (
-                          <Link
-                            to={`budget/${budgetItem.id}`}
-                            className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
-                          >
-                            View More Details
-                          </Link>
-                        ) : (
-                          <Link
-                            to="/dashboard"
-                            className="block w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400 text-center"
-                          >
-                            Dashboard
-                          </Link>
-                        )}
-                      </Grid>
-                    </Grid>
-                  </CardActions>
-                </Card>
-              </Box>
-            </ThemeProvider>
+                              <Item>
+                                <div className="relative">
+                                  <Typography
+                                    variant="subtitle2"
+                                    component="div"
+                                    className="absolute top-0 right-0 text-sm text-gray-500"
+                                  >
+                                    £{category.amount}
+                                  </Typography>
+                                  <Typography variant="h2" component="div">
+                                    £{category.amountUpdated}
+                                  </Typography>
+                                </div>
+                              </Item>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </ThemeProvider>
+            </Link>
           </div>
         ))
       ) : (

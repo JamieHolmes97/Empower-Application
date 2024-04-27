@@ -106,14 +106,22 @@ export default function BudgetsDashboard() {
       <div className="min-h-full">
         <NavBar />
         <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">Welcome to your Budgets Dashboard</h1>
             <Tooltip title="Add Expense?" placement="bottom">
               <button
                 onClick={handleOpen}
-                className="rounded bg-blue-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+                className="rounded bg-blue-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600 ml-auto"
               >
                 Add Expense <AddCircleOutlineIcon />
+              </button>
+            </Tooltip>
+            <Tooltip title="Delete Budget" placement="bottom">
+              <button
+                onClick={handleOpenDelete}
+                className="rounded bg-red-600 px-4 py-2 text-red-100 hover:bg-red-500 active:bg-red-600 ml-4"
+              >
+                Delete Budget <DeleteForeverIcon />
               </button>
             </Tooltip>
           </div>
@@ -130,19 +138,6 @@ export default function BudgetsDashboard() {
           </div>
           <div>{data ? null : <p>No financial details available.</p>}</div>
         </div>
-        {/* <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 pr-2">
-              Expenses
-            </h2>
-            <Tooltip title="Add Expense" placement="bottom">
-            <Button onClick={handleOpen}>
-              <AddCircleOutlineIcon />
-            </Button>
-            </Tooltip>
-          </div>
-        </header> */}
-
         <div className="mx-auto max-w-7xl py-1 sm:px-6 lg:px-8">
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -169,13 +164,6 @@ export default function BudgetsDashboard() {
           </div>
           <div>{data ? null : <p>No financial details available.</p>}</div>
         </div>
-        {/* <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 pr-2">
-              Visual Data
-            </h2>
-          </div>
-        </header> */}
         <Modal
           open={open}
           onClose={handleClose}
@@ -296,18 +284,6 @@ export default function BudgetsDashboard() {
             </Box>
           </Box>
         </Modal>
-        <footer className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between">
-            <Tooltip title="Delete Budget" placement="bottom">
-              <button
-                onClick={handleOpenDelete}
-                className="block w-full rounded bg-red-600 px-4 py-2 text-red-100 hover:bg-red-500 active:bg-red-600"
-              >
-                Delete Budget <DeleteForeverIcon />
-              </button>
-            </Tooltip>
-          </div>
-        </footer>
       </div>
     </>
   );
