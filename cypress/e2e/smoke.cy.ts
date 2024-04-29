@@ -39,40 +39,43 @@ describe("smoke tests", () => {
     cy.findByLabelText(/password/i).type(loginForm.password);
     cy.findByRole("button", { name: /create account/i }).click();
 
-    cy.findByRole("textbox", { name: /balance/i }).type(
-      String(numericValues.balance),
+    cy.findByRole("spinbutton", { name: /overall balance/i }).type(
+      String(numericValues.balance)
     );
-    cy.findByRole("textbox", { name: /income/i }).type(
-      String(numericValues.income),
+    
+    cy.findByRole("spinbutton", { name: /monthly income/i }).type(
+      String(numericValues.income)
     );
-    cy.findByRole("textbox", { name: /savings/i }).type(
-      String(numericValues.savings),
+    
+    cy.findByRole("spinbutton", { name: /current savings/i }).type(
+      String(numericValues.savings)
     );
+    
 
     cy.findByRole("button", { name: /submit/i }).click();
 
-    cy.findByText(`Balance: ${numericValues.balance}`);
-    cy.findByText(`Income: ${numericValues.income}`);
-    cy.findByText(`Savings: ${numericValues.savings}`);
+    cy.findByText(`Balance: £${numericValues.balance}`);
+    cy.findByText(`Monthly Income: £${numericValues.income}`);
+    cy.findByText(`Savings: £${numericValues.savings}`);
 
-    cy.findByRole("button", { name: /edit details/i }).click();
+    cy.findByRole('button', { name: /edit details/i }).click();
 
-    cy.findByRole("textbox", { name: /balance/i })
+    cy.findByRole("spinbutton", { name: /overall balance/i })
       .clear()
       .type(String(numericValuesChange.balance));
 
-    cy.findByRole("textbox", { name: /income/i })
+    cy.findByRole("spinbutton", { name: /monthly income/i })
       .clear()
       .type(String(numericValuesChange.income));
 
-    cy.findByRole("textbox", { name: /savings/i })
+    cy.findByRole("spinbutton", { name: /current savings/i })
       .clear()
       .type(String(numericValuesChange.savings));
 
     cy.findByRole("button", { name: /submit/i }).click();
 
-    cy.findByText(`Balance: ${numericValuesChange.balance}`);
-    cy.findByText(`Income: ${numericValuesChange.income}`);
-    cy.findByText(`Savings: ${numericValuesChange.savings}`);
+    cy.findByText(`Balance: £${numericValuesChange.balance}`);
+    cy.findByText(`Monthly Income: £${numericValuesChange.income}`);
+    cy.findByText(`Savings: £${numericValuesChange.savings}`);
   });
 });

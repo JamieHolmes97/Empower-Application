@@ -28,7 +28,9 @@ const FinancialDetailsCard = ({ financialData }) => {
               <Typography sx={{ fontSize: 25 }} color="text.secondary" gutterBottom>
                 Financial Details
                 <Tooltip className="ml-2" title="Edit Details" placement="bottom">
-                  <EditIcon onClick={handleRedirect} />
+                  <button onClick={handleRedirect}>
+                    <EditIcon />
+                  </button>
                 </Tooltip>
               </Typography>
               <Box sx={{ flexGrow: 1 }}>
@@ -51,7 +53,7 @@ const FinancialDetailsCard = ({ financialData }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <Item sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <SavingsIcon fontSize="large" /> 
+                      <SavingsIcon fontSize="large" />
                       <Typography variant="h6" component="span">
                         Savings: £{financialData.savings}
                       </Typography>
