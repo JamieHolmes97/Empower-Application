@@ -16,7 +16,7 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
     <>
       {budgetData.length > 0 ? (
         budgetData.map((budgetItem) => (
-          <div key={budgetItem.id} className="mt-2">
+          <div key={budgetItem.id} className="mb-2">
             <Link className="hover:bg-blue-600 focus:bg-blue-400" to={`budget/${budgetItem.id}`}>
               <ThemeProvider theme={darkTheme}>
                 <Box sx={{ minWidth: 275 }}>

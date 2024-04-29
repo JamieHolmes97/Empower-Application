@@ -45,6 +45,15 @@ export function createCategory({
   });
 }
 
+export function deleteCategoryById(categoryId: Category['id']) {
+  return prisma.category.delete({
+    where: {
+      id: categoryId,
+    },
+  });
+}
+
+
 export function createExpense({
   description,
   amount,
