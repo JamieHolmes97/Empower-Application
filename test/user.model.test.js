@@ -20,11 +20,10 @@ describe('User Service Tests', () => {
   });
 
   test('deleteUserByEmailAllData', async () => {
-    const emailToDelete = 'testing@example.com';
-
+    const createUser = 'newuser@example.com'
+    const emailToDelete = 'testexpense@example.com';
+    const newUser = await userService.createUser(emailToDelete, 'password');
     //await userService.deleteUserByEmail(emailToDelete);
-
-    
     const deletedUser = await userService.deleteUserByEmailAllData(emailToDelete);
   });
 });

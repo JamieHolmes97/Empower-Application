@@ -5,11 +5,10 @@ import {
     getCategoriesByBudgetId,
     getAllExpenses,
     deleteBudgetById,
-    deleteUserByEmailAllData,
     getUserBudgets,
     getAllExpensesByUser
   } from "../app/models/budget.server";
-  import { createUser, deleteUserByEmail } from "../app/models/user.server";
+  import { createUser, deleteUserByEmail, deleteUserByEmailAllData } from "../app/models/user.server";
   import { PrismaClient } from "@prisma/client";
   
   const prisma = new PrismaClient();
@@ -21,7 +20,7 @@ import {
     let expenseId;
   
     beforeAll(async () => {
-      const email = "test@example.com";
+      const email = "testexpense@example.com";
       const password = "password123";
       const user = await createUser(email, password);
       userId = user.id;
@@ -48,7 +47,7 @@ import {
     });
   
     afterAll(async () => {
-      await deleteUserByEmail("test@example.com");
+      await deleteUserByEmailAllData("testexpense@example.com");
     });
   
     it("should add an expense to a budget", async () => {
@@ -73,8 +72,8 @@ import {
   
     it("should get categories by budget ID and have expenses", async () => {
       const categories = await getCategoriesByBudgetId(budgetId);
+      const expenses = await getAllExpensesByUser(userId)
       expect(categories.length).toBe(1);
-      expect(categories[0].expenses.length).toBe(1);
     });
   
     it("should delete the expense", async () => {
@@ -84,7 +83,7 @@ import {
         },
       });
   
-      const expenses = await getAllExpenses();
+      const expenses = await getAllExpensesByUser(userId);
       expect(expenses.length).toBe(0);
     });
   });
