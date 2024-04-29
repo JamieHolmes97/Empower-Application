@@ -8,6 +8,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "@remix-run/react";
 import { darkTheme, Item } from "../mui.utils";
+import ProgressBar from "./ProgressBar";
+import { Divider } from "@mui/material";
 
 const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
   return (
@@ -26,7 +28,7 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 25 }} color="text.secondary" gutterBottom>
                           {budgetItem.name} Budget Details
                         </Typography>
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -38,27 +40,31 @@ const BudgetDetailsCard = ({ budgetData, viewMoreDetails }) => {
                         <Grid container spacing={2}>
                           {budgetItem.categories.map((category, categoryIndex) => (
                             <Grid item xs={3} key={categoryIndex}>
-                              <div className="mb-4">
+                              <div style={{ alignItems: "center" }}>
                                 <Item>
-                                  <Typography variant="subtitle1" component="div">
-                                    {category.name}:
-                                  </Typography>
+                                  <div className="flex items-center justify-between">
+                                    <div>
+                                      <Typography
+                                        variant="subtitle1"
+                                        component="div"
+                                        align="left"
+                                      >
+                                        {category.name}
+                                      </Typography>
+                                      <Divider />
+                                      <Typography variant="subtitle1" component="div" align="left">
+                                        £{category.amountUpdated} left of £{category.amount}
+                                      </Typography>
+                                    </div>
+                                    <div className="flex justify-end px-5">
+                                      <ProgressBar
+                                        progressAmount={category.amountUpdated}
+                                        progressTotal={category.amount}
+                                      />
+                                    </div>
+                                  </div>
                                 </Item>
                               </div>
-                              <Item>
-                                <div className="relative">
-                                  <Typography
-                                    variant="subtitle2"
-                                    component="div"
-                                    className="absolute top-0 right-0 text-sm text-gray-500"
-                                  >
-                                    £{category.amount}
-                                  </Typography>
-                                  <Typography variant="h2" component="div">
-                                    £{category.amountUpdated}
-                                  </Typography>
-                                </div>
-                              </Item>
                             </Grid>
                           ))}
                         </Grid>

@@ -41,3 +41,14 @@ export const createBudgetValidator = withZod(
   })
 );
 
+export const createExpenseValidator = withZod(
+  z.object({
+    ExpenseName: z.string()
+    .min(1, { message: "Expense name is required." })
+    .max(30, { message: "Expense name cannot exceed 30 characters"}),
+    amount: z.preprocess((value) => {
+      return value ? parseFloat(value.toString()) : 0
+    }, z.number().min(1, "Expense amount must be a positive number")),
+  })
+);
+
