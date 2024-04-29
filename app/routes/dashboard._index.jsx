@@ -7,13 +7,18 @@ import Grid from "@mui/material/Grid";
 import FinancialDetailsCard from "../components/financialdetailscard";
 import NavBar from "../components/NavBar";
 import BudgetDetailsCard from "../components/BudgetDetailsCard";
+import TipsDetailsCard from "../components/TipsDetailsCard"
 import { getUserBudgets } from "~/models/budget.server";
+import { getAllTips, getTipsByUserId } from "~/models/tips.server";
+
 
 export async function loader({ request }) {
   const userId = await requireUserId(request);
   const financialDetails = await getFinancialDetails({ userId });
   const usersBudgets = await getUserBudgets({ userId });
-  return { financialDetails, usersBudgets };
+  const allTips = await getAllTips();
+
+  return { financialDetails, usersBudgets, allTips };
 }
 
 export default function Dashboard() {
@@ -42,6 +47,9 @@ export default function Dashboard() {
                     budgetData={data.usersBudgets}
                     viewMoreDetails={true}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                 <TipsDetailsCard tipsData={data.allTips} userTipsData={data.allTips} dashboard={true} />
                 </Grid>
               </Grid>
             </Box>

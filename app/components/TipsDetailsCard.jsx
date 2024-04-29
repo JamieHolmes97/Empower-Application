@@ -1,10 +1,9 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { Box, Card, CardContent, Divider, Grid, Typography, Button } from "@mui/material";
-import { darkTheme, Item } from "../mui.utils"
+import { darkTheme, Item } from "../mui.utils";
 
-
-const TipsDetailsCard = ({ tipsData, userTipsData }) => {
+const TipsDetailsCard = ({ tipsData, userTipsData, dashboard }) => {
   const [showAllTips, setShowAllTips] = useState(false);
   const [showAllUserTips, setShowAllUserTips] = useState(false);
 
@@ -41,7 +40,7 @@ const TipsDetailsCard = ({ tipsData, userTipsData }) => {
             </Box>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
-                {displayedTips.map((tipsData, tipIndex) => (
+                {displayedTips.slice().reverse().map((tipsData, tipIndex) => (
                   <Grid item xs={3} key={tipIndex}>
                     <div className="mb-4">
                       <Item>
@@ -62,7 +61,7 @@ const TipsDetailsCard = ({ tipsData, userTipsData }) => {
                 ))}
               </Grid>
             </Box>
-            {!showAllTips && (
+            {dashboard ? null : !showAllTips && (
               <Button onClick={handleToggleTips} variant="outlined" color="primary" sx={{ mt: 2 }}>
                 Show More Tips
               </Button>
@@ -71,54 +70,56 @@ const TipsDetailsCard = ({ tipsData, userTipsData }) => {
         </Card>
       </Box>
 
-      <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined">
-          <CardContent>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-              className="mb-4"
-            >
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Your Tips
-              </Typography>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Total Tips: {userTipsData.length}
-              </Typography>
-            </Box>
-            <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={2}>
-                {displayedUserTips.map((userTips, tipIndex) => (
-                  <Grid item xs={3} key={tipIndex}>
-                    <div className="mb-4">
-                      <Item>
-                        <Typography variant="subtitle1" component="div">
-                          {userTips.university}
-                        </Typography>
-                        <Divider />
-                        <Typography variant="subtitle1" component="div">
-                          {userTips.message}
-                        </Typography>
-                        <Divider />
-                        <Typography variant="subtitle1" component="div">
-                          {userTips.name}
-                        </Typography>
-                      </Item>
-                    </div>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-            {!showAllTips && (
-              <Button onClick={handleToggleUserTips} variant="outlined" color="primary" sx={{ mt: 2 }}>
-                Show More Tips
-              </Button>
-            )}
-          </CardContent>
-        </Card>
-      </Box>
+      {dashboard ? null : (
+        <Box sx={{ minWidth: 275 }}>
+          <Card variant="outlined">
+            <CardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+                className="mb-4"
+              >
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  Your Tips
+                </Typography>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  Total Tips: {userTipsData.length}
+                </Typography>
+              </Box>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  {displayedUserTips.slice().reverse().map((userTips, tipIndex) => (
+                    <Grid item xs={3} key={tipIndex}>
+                      <div className="mb-4">
+                        <Item>
+                          <Typography variant="subtitle1" component="div">
+                            {userTips.university}
+                          </Typography>
+                          <Divider />
+                          <Typography variant="subtitle1" component="div">
+                            {userTips.message}
+                          </Typography>
+                          <Divider />
+                          <Typography variant="subtitle1" component="div">
+                            {userTips.name}
+                          </Typography>
+                        </Item>
+                      </div>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+              {!showAllTips && (
+                <Button onClick={handleToggleUserTips} variant="outlined" color="primary" sx={{ mt: 2 }}>
+                  Show More Tips
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
+      )}
     </ThemeProvider>
   );
 };

@@ -40,7 +40,7 @@ export default function CommunityTips() {
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TipsDetailsCard tipsData={tipsData.allTips} userTipsData={tipsData.userTips} />
+                <TipsDetailsCard tipsData={tipsData.allTips} userTipsData={tipsData.userTips} dashboard={false} />
               </Grid>
             </Grid>
           </Box>
