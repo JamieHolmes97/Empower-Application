@@ -63,13 +63,10 @@ describe("Community Tips functionality", () => {
             userId: userId
         });
 
-        // Delete the tip
         await deleteMessage(tip.id);
 
-        // Retrieve all tips
         const tips = await getTipsByUserId(userId);
 
-        // Check if the tip is deleted
-        expect(tips.length).toBe(3); // Only the previously created tips should remain
+        expect(tips.length).toBe(3); 
     });
 });
