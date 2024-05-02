@@ -11,7 +11,6 @@ const user = {
 };
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Financial Goals", href: "#", current: false },
   { name: "Community Tips", href: "/communitytips", current: false },
   { name: "Add Budget", href: "/createbudget", current: false },
 ];

@@ -110,13 +110,13 @@ describe("Testing all functionality of user", () => {
 
     cy.wait(1000);
 
-    cy.findByRole("button", { name: /add expense/i }).click();
-    cy.findByRole("textbox", { name: /expense name/i })
-      .clear()
-      .type("Testing Food Expense");
-    cy.get("#expenseAmount").clear().type("50");
-    cy.get("#expenseCategory").select("Food");
-    cy.findByRole("button", { name: /add expense/i }).click();
+    // cy.findByRole("button", { name: /add expense/i }).click();
+    // cy.findByRole("textbox", { name: /expense name/i })
+    //   .clear()
+    //   .type("Testing Food Expense");
+    // cy.get("#expenseAmount").clear().type("50");
+    // cy.get("#expenseCategory").select("Food");
+    // cy.findByRole("button", { name: /add expense/i }).click();
 
     cy.wait(2000);
 

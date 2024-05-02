@@ -3,12 +3,9 @@ import {
     createCategory,
     createExpense,
     getCategoriesByBudgetId,
-    getAllExpenses,
-    deleteBudgetById,
-    getUserBudgets,
     getAllExpensesByUser
   } from "../app/models/budget.server";
-  import { createUser, deleteUserByEmail, deleteUserByEmailAllData } from "../app/models/user.server";
+  import { createUser, deleteUserByEmailAllData } from "../app/models/user.server";
   import { PrismaClient } from "@prisma/client";
   
   const prisma = new PrismaClient();
