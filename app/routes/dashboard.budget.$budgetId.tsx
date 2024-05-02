@@ -24,6 +24,7 @@ import React, { useState } from "react";
 import ExpenseDetailsCard from "../components/ExpensesCard";
 import VisualDataCard from "../components/VisualDataCard";
 import { redirect } from "@remix-run/node";
+import { handleInputNumber } from "~/utils";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -177,7 +178,7 @@ export default function BudgetsDashboard() {
                 If so fill in the detials below. The budget will automatically update with these details.
               </h3>
               <Form method="post" className="space-y-6">
-                <div>
+                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Expense Name
                   </label>
@@ -190,7 +191,7 @@ export default function BudgetsDashboard() {
                       className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
                     />
                   </div>
-                </div>
+                </div> 
 
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -198,11 +199,13 @@ export default function BudgetsDashboard() {
                   </label>
                   <div className="mt-1">
                     <input
-                      id="name"
+                      id="expenseAmount"
                       required
                       autoFocus={true}
                       name="expenseAmount"
                       className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                      type="number"
+                      onInput={handleInputNumber}
                     />
                   </div>
                 </div>

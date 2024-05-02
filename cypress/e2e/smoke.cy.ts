@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-describe("smoke tests", () => {
+describe("Testing all functionality of user", () => {
   // afterEach(() => {
   //   cy.cleanupUser();
   // });
@@ -23,12 +23,6 @@ describe("smoke tests", () => {
       savings: 1200,
     };
 
-    const numericValuesChange = {
-      balance: 3000,
-      income: 2000,
-      savings: 4500,
-    };
-
     cy.then(() => ({ email: loginForm.email })).as("user");
 
     cy.visitAndCheck("/");
@@ -40,9 +34,7 @@ describe("smoke tests", () => {
     cy.findByRole("button", { name: /create account/i }).click();
 
     cy.findByRole("spinbutton", { name: /overall balance/i }).type(String(numericValues.balance));
-
     cy.findByRole("spinbutton", { name: /monthly income/i }).type(String(numericValues.income));
-
     cy.findByRole("spinbutton", { name: /current savings/i }).type(String(numericValues.savings));
 
     cy.findByRole("button", { name: /submit/i }).click();
@@ -50,6 +42,12 @@ describe("smoke tests", () => {
     cy.findByText(`Balance: £${numericValues.balance}`);
     cy.findByText(`Monthly Income: £${numericValues.income}`);
     cy.findByText(`Savings: £${numericValues.savings}`);
+
+    const numericValuesChange = {
+      balance: 3000,
+      income: 2000,
+      savings: 4500,
+    };
 
     cy.findByRole("button", { name: /edit details/i }).click();
 
@@ -78,39 +76,70 @@ describe("smoke tests", () => {
     cy.findByRole("spinbutton", { name: /budget duration in days/i }).type(String(30));
     cy.findByRole("button", { name: /next/i }).click();
 
-    cy.get('#category').select('Housing');
+    cy.get("#category").select("Housing");
     cy.findByRole("spinbutton", { name: /category amount/i }).type(String(250));
     cy.findByRole("button", { name: /add category/i }).click();
 
-    cy.get('#category').select('Food');
-    cy.findByRole("spinbutton", { name: /category amount/i }).clear().type(String(100));
+    cy.get("#category").select("Food");
+    cy.findByRole("spinbutton", { name: /category amount/i })
+      .clear()
+      .type(String(100));
     cy.findByRole("button", { name: /add category/i }).click();
 
-    cy.get('#category').select('Clothing');
-    cy.findByRole("spinbutton", { name: /category amount/i }).clear().type(String(50));
+    cy.get("#category").select("Clothing");
+    cy.findByRole("spinbutton", { name: /category amount/i })
+      .clear()
+      .type(String(50));
     cy.findByRole("button", { name: /add category/i }).click();
 
-    cy.get('#category').select('Savings');
-    cy.findByRole("spinbutton", { name: /category amount/i }).clear().type(String(50));
+    cy.get("#category").select("Savings");
+    cy.findByRole("spinbutton", { name: /category amount/i })
+      .clear()
+      .type(String(50));
     cy.findByRole("button", { name: /add category/i }).click();
 
-    cy.get('.text-center').click();
+    cy.get(".text-center").click();
 
+    cy.contains("Duration").click();
 
+    cy.findByRole("button", { name: /add expense/i }).click();
+    cy.findByRole("textbox", { name: /expense name/i }).type("Testing Housing Expense");
+    cy.get("#expenseAmount").type("250");
+    cy.get("#expenseCategory").select("Housing");
+    cy.findByRole("button", { name: /add expense/i }).click();
 
+    cy.wait(1000);
 
+    cy.findByRole("button", { name: /add expense/i }).click();
+    cy.findByRole("textbox", { name: /expense name/i })
+      .clear()
+      .type("Testing Food Expense");
+    cy.get("#expenseAmount").clear().type("50");
+    cy.get("#expenseCategory").select("Food");
+    cy.findByRole("button", { name: /add expense/i }).click();
 
+    cy.wait(2000);
 
+    cy.findByRole("button", { name: /add expense/i }).click();
+    cy.findByRole("textbox", { name: /expense name/i })
+      .clear()
+      .type("Testing Clothing Expense");
+    cy.get("#expenseAmount").clear().type("100");
+    cy.get("#expenseCategory").select("Clothing");
+    cy.findByRole("button", { name: /add expense/i }).click();
 
+    cy.findByRole("button", { name: /delete budget/i }).click();
+    cy.findByRole("button", { name: /delete budget/i }).click();
 
+    cy.contains("Community Tips").click();
+    cy.contains("Add Community Tip").click();
 
-
-
- 
-
-
-
-    
-  
+    cy.findByRole("textbox", { name: /what is your name/i }).type("John");
+    cy.findByRole("textbox", { name: /what university do you currently attend/i }).type("Ulster University, Belfast");
+    cy.findByRole("textbox", { name: /please write the tip you would like to share/i }).type(
+      "Free energy drink or coffee at the Centra beside the uni",
+    );
+    cy.findByRole("button", { name: /add community tip/i }).click();
+    cy.contains("Dashboard").click();
   });
 });
