@@ -22,13 +22,11 @@ export default function Index() {
             </div>
             <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-blue-500 drop-shadow-md">
-                  Empower
-                </span>
+                <span className="block uppercase text-blue-500 drop-shadow-md">Empower</span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                An application developed to empower students financial and
-                redirect their sole focus towards their dreams
+                An application developed to empower students financially and redirect their sole focus towards their
+                studies
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
                 {user ? (
@@ -65,31 +63,30 @@ export default function Index() {
               {[
                 {
                   title: "Tracking and Monitoring",
-                  description:
-                    "Track and Monitor your expenses in a visually pleasing manner allowing you to grasp a picture of your finances",
+                  description: "Track and Monitor your expenses in a visually pleasing manner",
                 },
                 {
                   title: "Budgeting",
-                  description:
-                    "Have the ability to create Budgets and allocate your spending into various categories to help manage your spending and saving ",
+                  description: "Have the ability to create Budgets and allocate your spending into various categories",
                 },
                 {
                   title: "Financial Goals",
-                  description:
-                    "Have a goal in mind? Maybe saving for something you need.... or desire? With custom goals you will be able to manage saving towards these goals ",
+                  description: "Have a goal in mind? Maybe saving for something you need.... or desire?",
                 },
                 {
                   title: "Community Tips",
                   description:
-                    "Always wanted to gain some helpful financial tips and tricks from fellow students? Well now you can with integrated community tips and tricks posted by you",
+                    "Gain some helpful financial tipsfrom fellow students with integrated community tips posted by you",
                 },
               ].map((card, index) => (
                 <a
                   key={index}
-                  className="flex flex-col h-48 w-64 justify-center p-4 bg-white rounded-lg shadow-md transition hover:shadow-lg focus:shadow-lg"
+                  className="flex flex-col h-20 w-64 justify-center p-4 bg-black rounded-lg shadow-md transition hover:shadow-lg focus:shadow-lg"
                 >
-                  <h2 className="text-lg font-semibold mb-2">{card.title}</h2>
-                  <p className="text-sm">{card.description}</p>
+                  <h2 className="flex items-center justify-center rounded-md bg-blue-500 px-4 py-3 font-medium text-white hover:bg-blue-600">
+                    {card.title}
+                  </h2>
+                  {/* <p className="text-sm">{card.description}</p> */}
                 </a>
               ))}
             </div>

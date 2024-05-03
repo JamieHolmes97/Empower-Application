@@ -3,9 +3,12 @@ import { deleteExpenseById, updateCategoryAmount, findExpenseById } from "~/mode
 import { Form } from "@remix-run/react";
 import NavBar from "~/components/NavBar";
 import { prisma } from "~/db.server";
+import { updateBalance } from "~/models/financial.server";
+import { requireUserId } from "~/session.server";
   
-export const action = async ({ params }: ActionFunctionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
 
+  const userId = await requireUserId(request);
   const expenseDetails = await findExpenseById(params.expenseId as string)
   const expenseAmount = expenseDetails.amount
 
@@ -19,9 +22,11 @@ export const action = async ({ params }: ActionFunctionArgs) => {
   }
 
   const updatedAmount = category.amountUpdated + expenseAmount
+  const amount = -expenseAmount
 
   const updatedExpense = await updateCategoryAmount(expenseDetails.categoryId, updatedAmount)
   const deletedExpense = await deleteExpenseById(params.expenseId as string);
+  await updateBalance({userId, amount})
   
   return redirect('/dashboard');
 };

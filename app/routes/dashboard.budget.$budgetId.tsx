@@ -9,6 +9,7 @@ import {
   getAllBudgets,
   deleteBudgetById,
 } from "~/models/budget.server";
+import { updateBalance } from "~/models/financial.server";
 import { requireUserId } from "~/session.server";
 import { Form, useLoaderData } from "@remix-run/react";
 import BudgetDetailsCard from "../components/BudgetDetailsCard";
@@ -27,6 +28,7 @@ import { redirect } from "@remix-run/node";
 import { handleInputNumber } from "~/utils";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
+  const userId = await requireUserId(request);
   const formData = await request.formData();
   const intent = formData.get("intent");
 
@@ -60,6 +62,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
       const currentAmount = category.amountUpdated;
       const updatedAmount = currentAmount - amount;
       await updateCategoryAmount(categoryId, updatedAmount);
+      await updateBalance({userId, amount})
 
       return expense;
 
